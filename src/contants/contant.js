@@ -1,0 +1,37 @@
+
+const Status = {
+	"PENDING":"PENDING",
+	"PROCESS":"PROCESS",
+	"ORDER":"ORDER",
+	"ACCEPTED":"ACCEPTED",
+	"REJECTED":"REJECTED",
+	"ONTHEWAY":"ONTHEWAY",
+	"COMPLETED":"COMPLETED",
+	"SUCCESS":"SUCCESS",
+	"DELIVERED":"DELIVERED",
+	"CANCELLED":"CANCELLED",
+	"ONGOING":"ONGOING",
+	"TIMEZONE":"Asia/kolkata"
+}
+
+const Role = {
+	USER:"USER",
+	ARTIST:"ARTIST",
+	ADMIN:"ADMIN"
+}
+
+const DateFormat = {
+	"DATE_FORMAT" : "YYYY-MM-DD hh:mm:ss",
+	"DATE_FORMAT_MMDDYYYY" : "DDMMYYYY",
+	"DATE_FORMATE_DDMM" : "DDMMhhmm",
+	"DATE_FORMAT_MMM_D_YYYY" : "MMM d YYYY",
+	"DATE_FORMAT_MM_DD_YYYY" : "MM/DD/YYYY",
+	"DATE_FORMAT_DD_MM_YYYY" : "DD/MM/YYYY",
+	"DATE_FORMAT_MMM_D__YYYY" : "MMM D, YYYY"
+}
+
+module.exports = {
+	Status,
+	Role,
+	DateFormat
+}

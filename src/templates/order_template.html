@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation</title>
+    <style>
+        .main-container {
+            margin: 0 auto;
+            max-width: 630px;
+            width: 100%;
+            background: #f0f0f0;
+            border-radius: 7px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
+           padding: 0 0 20px 0;
+        }
+
+        .thanks-heading {
+            margin: 0;
+            text-align: center;
+            padding: 10px;
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .about-order{
+            padding: 10px 15px;
+            font-size: 20px;
+        }
+        h2.order-number {
+            padding: 0 15px 20px;
+        }
+        table,th,td{
+            border: 1px solid #000000;
+        }
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+        .order-track a{
+            text-decoration: none;
+            color:#1b6ef3;
+            cursor: pointer;
+        }
+        h2.billing-heading{
+            padding: 20px 15px 20px;
+        }
+        .name-city{
+            padding: 10px 15px;
+            border: 1px solid #000000;
+            margin: 0 15px 20px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="thanks-section">
+            <h1 class="thanks-heading">Thank You for your order</h1>
+        </div>
+        <div class="order-status">
+            <p class="about-order">Your order has been received and is now being processed. Your orrder details are shown below for your
+                reference :</p>
+
+
+                <h2 class="order-number">Order No. <span><%= order_number %></span><span><%= created_at %></span></h2>
+        </div>
+        <div class="table-container">
+            <table style="width: 90%;border-collapse: collapse;">
+                <thead>
+                    <tr style="height: 30px;">
+                        <th>Product</th>
+                        <th  style="text-align: right;">Quantity</th>
+                        <th  style="text-align: right;">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let item of items) { %>
+                        <tr style="height: 40px;">
+                            <td style="text-align: center;"><%= item.name %>></td>
+                            <td style="text-align: right;"><%= item.quantity %></td>
+                            <td style="text-align: right;"><%= item.price %></td>
+                        </tr>
+                      <% } %>
+            
+                    <tr style="height:40px;">
+                        <td style="text-align: center;" colspan="2"><b>Sub Total:</b></td>
+                        <td style="text-align: right;"><%= order_sub_total %></td>
+                    </tr>
+                    <tr style="height:40px;">
+                        <td style="text-align: center;" colspan="2"><b>Tax:</b></td>
+                        <td style="text-align: right;"><%= tax %></td>
+                    </tr>
+                    <tr style="height:40px;">
+                        <td style="text-align: center;" colspan="2"><b>Total:</b></td>
+                        <td style="text-align: right;"><%= order_total %></td>
+                    </tr>
+                    <tr style="height:40px;">
+                        <td style="text-align: center;" colspan="2"><b>Payment Method:</b></td>
+                        <td style="text-align: center;">Razor Pay</td>
+                    </tr>
+                    <!-- <tr style="height:40px;">
+                        <td style="text-align: center;" ><b>Shipping:</b></td>
+                        <td  colspan="2">Ready To Ship</td>
+                    </tr> -->
+                    <!-- <tr style="height:40px;">
+                        <td style="text-align: center;" colspan="2"><b>Delivery Charges:</b></td>
+                        <td style="text-align:center;">Free</td>
+                    </tr> -->
+                    <!-- <tr style="height:40px;">
+                        <td style="text-align: center;" colspan="2"><b>Order Status:</b></td>
+                        <td class="order-track" style="text-align:center;">
+                            <a href="http://paintikaart.com/page/order-status">Track Order
+                            </a>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+
+        </div>
+        <!-- <div class="billing-address">
+            <h2 class="billing-heading" style="margin: 0;">Billing Address :</h2>
+            <div class="name-city">
+                <p>Name: <span>Amit</span></p>
+                <p>Street: <span>Abc</span></p>
+                <p>City: <span>Khara</span></p>
+                <p>Postal Code: <span>177201</span></p>
+                <p>Country: <span>India</span></p>
+            </div>
+        </div> -->
+    </div>
+</body>
+
+</html>
