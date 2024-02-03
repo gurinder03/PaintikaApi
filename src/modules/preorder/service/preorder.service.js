@@ -6,6 +6,8 @@ const add = async (req, res) => {
     try {
         const file = req.file;
         console.log("== file file====", req);
+        console.log("== file file0000====", req.file);
+        console.log("== file file//////====", req.files);
         console.log("=== body body ===", req.body);
         if (file) {
             req.body.image = file.location;
