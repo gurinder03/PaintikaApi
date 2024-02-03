@@ -18,8 +18,8 @@ const add = async (req, res) => {
 
 const appAdd = async (req, res) => {
     try {
-        console.log("== before before =======", req.body);
-        let fileData = await imageUpload.uploadBase64File(req.body.image)
+        console.log("== before before =======", req.body,JSON.parse(req.body.image));
+        let fileData = await imageUpload.uploadBase64File(JSON.parse(req.body.image))
         if(fileData.statusCode == 200){
             req.body.image = fileData.path;
         }
