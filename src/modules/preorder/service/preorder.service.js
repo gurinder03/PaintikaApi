@@ -1,5 +1,6 @@
 
 const Response = require('../../../utils/response');
+const imageUpload = require('../../../helper/awsBase64');
 const Controller = require('../controller/preorder.controller');
 
 const add = async (req, res) => {
