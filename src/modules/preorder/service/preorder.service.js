@@ -5,6 +5,8 @@ const Controller = require('../controller/preorder.controller');
 const add = async (req, res) => {
     try {
         const file = req.file;
+        console.log("== file file====", file);
+        console.log("=== body body ===", req.body);
         if (file) {
             req.body.image = file.location;
         }
