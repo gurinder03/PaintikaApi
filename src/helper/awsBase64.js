@@ -1,4 +1,5 @@
 'use strict';
+const { S3Client } = require('@aws-sdk/client-s3')
 const { Buffer } = require('buffer');
 const crypto = require('crypto');
 const s3 = new S3Client({
