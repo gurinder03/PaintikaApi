@@ -46,3 +46,22 @@ module.exports.uploadBase64File = async (base64String) => {
 
 
 
+
+
+const add = async (req, res) => {
+    try {
+
+
+        console.log("== before before =======", req.body);
+ 
+        let fileData = await imageUpload.uploadBase64File(req.body.image)
+        if(fileData.statusCode == 200){
+            req.body.image = fileData.path;
+        }
+        console.log("===req.body ",req.body)
+        let result = await Controller.add(req.body);
+        return Response.successResponse(res, "Data success", result);
+    } catch (err) {
+        return Response.internalError(res, err);
+    }
+}

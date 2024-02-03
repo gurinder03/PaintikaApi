@@ -1,9 +1,22 @@
 
 const Response = require('../../../utils/response');
-const imageUpload = require('../../../helper/awsBase64');
 const Controller = require('../controller/preorder.controller');
 
 const add = async (req, res) => {
+    try {
+        const file = req.file;
+        if (file) {
+            req.body.image = file.location;
+        }
+        let result = await Controller.add(req.body);
+        return Response.successResponse(res, "Data success", result);
+    } catch (err) {
+        return Response.internalError(res, err);
+    }
+}
+
+
+const appAdd = async (req, res) => {
     try {
         console.log("== before before =======", req.body);
         let fileData = await imageUpload.uploadBase64File(req.body.image)
@@ -17,7 +30,6 @@ const add = async (req, res) => {
         return Response.internalError(res, err);
     }
 }
-
 const list = async(req,res) =>{
     try{
         let result = await Controller.list(req.body);
@@ -29,5 +41,6 @@ const list = async(req,res) =>{
 
 exports.list = list;
 exports.add = add;
+exports.appAdd = appAdd;
 
 
