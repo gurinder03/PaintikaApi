@@ -1,17 +1,16 @@
 
 const Response = require('../../../utils/response');
+const imageUpload = require('../../../helper/awsBase64');
 const Controller = require('../controller/preorder.controller');
 
 const add = async (req, res) => {
     try {
-        const file = req.file;
-        console.log("== file file====", req);
-        console.log("== file file0000====", req.file);
-        console.log("== file file//////====", req.files);
-        console.log("=== body body ===", req.body);
-        if (file) {
-            req.body.image = file.location;
+        console.log("== before before =======", req.body);
+        let fileData = await imageUpload.uploadBase64File(req.body.image)
+        if(fileData.statusCode == 200){
+            req.body.image = fileData.path;
         }
+        console.log("===req.body ",req.body)
         let result = await Controller.add(req.body);
         return Response.successResponse(res, "Data success", result);
     } catch (err) {
