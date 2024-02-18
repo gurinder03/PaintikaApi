@@ -112,16 +112,37 @@ exports.list = async (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
             const obj = {};
-            let { order, page, limit, filter,status,category,creator_id} = payload;
-            let size = limit || 10;
-            let order_by = "created_at";
-            let sort_by = order || -1;
+            let min,max;
+            let { page, limit, 
+                status,category,creator_id,
+                price,size,medium,color,
+                frame_quality,
+                is_paintika_art,is_copy_sale} = payload;
+            let pagesize = limit || 10;
             let paged = page || 1;
-            if(filter){
-                obj['$or'] = [];
-                obj["$or"].push({'name': { $regex: payload.filter || '', $options: 'i' }})
-                obj["$or"].push({'desc': { $regex: payload.filter || '', $options: 'i' }})
-                obj["$or"].push({'price': { $regex: payload.filter || '', $options: 'i' }})
+            obj['$or'] = [];
+            if(size && size.length > 0){
+                obj["$or"].push({'size':{$in:size}}) 
+            }
+            if(price && price.length > 0){
+                 min = Math.min(...price);
+                 max = Math.max(...price);
+                 obj["$or"].push({'price':{$and:[{ $gte: min }, { $lte: max }]}})
+            }
+            if(frame_quality && frame_quality.length > 0){
+                obj["$or"].push({'frame_quality':{$in:frame_quality}})   
+            }
+            if(is_paintika_art){
+                obj["$or"].push({'is_paintika_art':is_paintika_art})   
+            }
+            if(is_copy_sale){
+                obj["$or"].push({'is_copy_sale':is_copy_sale})   
+            }
+            if(medium && medium.length > 0){
+                obj["$or"].push({'medium':{$in:medium}})   
+            }
+            if(color && color.length > 0){
+                obj["$or"].push({'color':{$in:color}}) 
             }
             if(creator_id){
                 obj.creator_id = creator_id;
@@ -137,8 +158,8 @@ exports.list = async (payload) => {
                     $match:obj
                 },
                 {$sort :{createdAt: -1}},
-                {$skip: (paged-1)*size},
-                {$limit: parseInt(size) },
+                {$skip: (paged-1)*pagesize},
+                {$limit: parseInt(pagesize) },
             ]
             let params = {
                 Collection: mongoose.model("arts"),

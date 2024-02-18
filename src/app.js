@@ -6,7 +6,6 @@ const path = require('path');
 const logger = require('morgan');
 const cors = require('cors');
 const cluster = require('cluster');
-const useragent = require('express-useragent');
 const dbConnetion = require('./db/connection');
 const numCPUs = require('os').cpus().length;
 const port = process.env.PORT || 5004;

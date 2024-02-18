@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const dropdowns = require('../../../contants/artDropdowns');
 const Response = require('../../../utils/response');
 const Controller = require('../controller/art.controller');
 
@@ -72,6 +73,14 @@ const alllist = async(req,res) =>{
         req.body.id = req.params.id;
         let result = await Controller.alllist(req.body);
         return Response.successResponseWithCount(res, "List successfully", result);
+    }catch(err){
+        return Response.internalError(res,err);
+    }
+}
+
+const dropdowns = async(req,res) =>{
+    try{
+        return Response.successResponse(res, "Data successfully", dropdowns);
     }catch(err){
         return Response.internalError(res,err);
     }

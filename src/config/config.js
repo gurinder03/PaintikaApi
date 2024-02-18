@@ -18,6 +18,7 @@ module.exports = {
 
     AWS_REGION: "ap-south-1",
     AWS_BUCKET: "paintika",
+    
     PAYMENT_KEY_ID: "rzp_test_jJJrfOKqYAvjcP",
     PAYMENT_KEY_SECRET: "QytsVUszwEQOZP3VfJCMh4st"
 }

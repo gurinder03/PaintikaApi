@@ -22,6 +22,8 @@ Router.post('/list',[Authenticator.verifyToken,Validator.list],Service.list);
 
 Router.get('/category/list',Service.alllist);
 
+Router.get('/dropdowns',Service.dropdowns);
+
 Router.delete('/remove',Authenticator.verifyToken,Validator.remove,Service.remove);
 
 
