@@ -13,7 +13,7 @@ const add = async (req, res) => {
         if (file) {
             payload.image = file.location;
         }
-        payload.color = JSON.stringify(payload.color);
+        payload.color = JSON.parse(payload.color);
         let result = await Controller.add(payload);
         return Response.successResponse(res, "Add successfully", result);
     } catch (err) {
