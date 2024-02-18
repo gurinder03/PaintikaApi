@@ -111,6 +111,7 @@ exports.updateUser = async (payload) => {
 exports.list = async (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
+            console.log("== payload ====",payload);
             const obj = {};
             let min,max;
             let { page, limit, 
@@ -153,6 +154,7 @@ exports.list = async (payload) => {
             if(category){
                 obj.category = new mongoose.Types.ObjectId(category);
             }
+            console.log("== query ====",obj);
             let aggregateQuery = [
                 {
                     $match:obj
