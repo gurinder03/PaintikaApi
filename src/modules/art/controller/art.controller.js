@@ -133,7 +133,10 @@ exports.list = async (payload) => {
             if(price && price.length > 0){
                  min = Math.min(...price);
                  max = Math.max(...price);
-                 obj["$or"].push({'price':{ $gte: min ,$lte: max }})
+                 console.log("== min  ==", min);
+                 console.log("==max ==", max);
+                 obj["$or"].push({'price':{ $gte: min }})
+                 obj["$or"].push({'price':{ $lte: max }})
             }
             if(frame_quality && frame_quality.length > 0){
                 obj["$or"].push({'frame_quality':{$in:frame_quality}})   
