@@ -7,9 +7,13 @@ const add = async (req, res) => {
     try {
         let payload = req.body;
         const file = req.file;
+        if (!file) {
+            return Response.validatorResponse(res, "Image is required");
+        }
         if (file) {
             payload.image = file.location;
         }
+        payload.color = JSON.stringify(payload.color);
         let result = await Controller.add(payload);
         return Response.successResponse(res, "Add successfully", result);
     } catch (err) {
@@ -102,6 +106,6 @@ exports.remove = remove;
 exports.update = update;
 exports.status = status;
 exports.alllist = alllist;
-exports.dropdownList = dropdownList
+exports.dropdownList = dropdownList;
 
 
