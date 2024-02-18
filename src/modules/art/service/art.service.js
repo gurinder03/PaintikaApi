@@ -78,7 +78,7 @@ const alllist = async(req,res) =>{
     }
 }
 
-const dropdowns = async(req,res) =>{
+const dropdownList = async(req,res) =>{
     try{
         return Response.successResponse(res, "Data successfully", dropdowns);
     }catch(err){
@@ -102,5 +102,6 @@ exports.remove = remove;
 exports.update = update;
 exports.status = status;
 exports.alllist = alllist;
+exports.dropdownList = dropdownList
 
 
