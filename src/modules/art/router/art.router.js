@@ -10,9 +10,7 @@ const Service =  require('../service/art.service');
 
 /******************************************* USER ROUTES*****************************************************/
 
-// Router.post("/add",Authenticator.verifyToken,uploadImage.single("image"),Validator.add,Service.add);
-
-Router.post("/add",uploadImage.single("image"),Validator.add,Service.add);
+Router.post("/add",Authenticator.verifyToken,uploadImage.single("image"),Validator.add,Service.add);
 
 Router.get('/view/:id',Authenticator.verifyToken,Service.view);
 
@@ -20,7 +18,9 @@ Router.post('/update',Authenticator.verifyToken,uploadImage.single("image"),Vali
 
 Router.put('/update/status/:id',Authenticator.verifyToken,Validator.status,Service.status);
 
-Router.post('/list',[Authenticator.verifyToken,Validator.list],Service.list);
+// Router.post('/list',[Authenticator.verifyToken,Validator.list],Service.list);
+
+Router.post('/list',[Validator.list],Service.list);
 
 Router.get('/category/list',Service.alllist);
 
