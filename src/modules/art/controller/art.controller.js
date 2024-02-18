@@ -122,7 +122,7 @@ exports.list = async (payload) => {
             let pagesize = limit || 10;
             let paged = page || 1;
             if(price && price.length == 0 && size && size.length == 0 && medium && medium.length == 0 && color && color.length == 0){
-                obj = {};
+obj = {};
             }else{
                 obj['$or'] = [];
             }
@@ -133,10 +133,8 @@ exports.list = async (payload) => {
             if(price && price.length > 0){
                  min = Math.min(...price);
                  max = Math.max(...price);
-                 console.log("== min  ==", min);
-                 console.log("==max ==", max);
-                 obj["$or"].push({'price':{ $gte: min }})
-                 obj["$or"].push({'price':{ $lte: max }})
+                 obj["$and"].push({'price':{ $gte: min }})
+                 obj["$and"].push({'price':{ $lte: max }})
             }
             if(frame_quality && frame_quality.length > 0){
                 obj["$or"].push({'frame_quality':{$in:frame_quality}})   
