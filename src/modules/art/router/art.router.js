@@ -10,7 +10,9 @@ const Service =  require('../service/art.service');
 
 /******************************************* USER ROUTES*****************************************************/
 
-Router.post("/add",Authenticator.verifyToken,uploadImage.single("image"),Validator.add,Service.add);
+// Router.post("/add",Authenticator.verifyToken,uploadImage.single("image"),Validator.add,Service.add);
+
+Router.post("/add",uploadImage.single("image"),Validator.add,Service.add);
 
 Router.get('/view/:id',Authenticator.verifyToken,Service.view);
 
