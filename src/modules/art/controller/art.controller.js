@@ -112,7 +112,7 @@ exports.list = async (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
             console.log("== payload ====",payload);
-            const obj = {};
+            let obj = {};
             let min,max;
             let { page, limit, 
                 status,category,creator_id,
@@ -121,7 +121,12 @@ exports.list = async (payload) => {
                 is_paintika_art,is_copy_sale} = payload;
             let pagesize = limit || 10;
             let paged = page || 1;
-            obj['$or'] = [];
+            if(price && price.length == 0 && size && size.length == 0 && medium && medium.length == 0 && color && color.length == 0){
+                obj = {};
+            }else{
+                obj['$or'] = [];
+            }
+           
             if(size && size.length > 0){
                 obj["$or"].push({'size':{$in:size}}) 
             }
