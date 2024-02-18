@@ -21,7 +21,7 @@ const artSchema = new mongoose.Schema({
     frame_quality:{type: String},
     size:{type: String},
     medium:{type: String},
-    colors:[],
+    color:[],
     theme:{type: String},
     is_paintika_art:{type: String, default: "no"},   // no yes
     is_copy_sale:{type: String, default: "no"},   // no yes

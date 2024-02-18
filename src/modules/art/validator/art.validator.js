@@ -12,6 +12,22 @@ module.exports.add = (req,res,next)=>{
     if(!req.body.creator_id){
         return Response.validatorResponse(res,"Creator id is required");
     }
+    if(!req.body.size){
+        return Response.validatorResponse(res,"Size is required");
+    }
+    if(!req.body.medium){
+        return Response.validatorResponse(res,"Medium is required");
+    }
+    if(!req.body.is_copy_sale){
+        return Response.validatorResponse(res,"is_copy_sale is required");
+    }
+    if(!req.body.frame_quality){
+        return Response.validatorResponse(res,"frame_quality is required");
+    }
+    if(!req.body.color){
+        return Response.validatorResponse(res,"color is required");
+    }
+
     req.body.status = "pending";
     if(!req.body.price){
         return Response.validatorResponse(res,"Price is required");
