@@ -109,19 +109,18 @@ exports.dashboard = (payload) => {
             const obj = {};
             obj.status = "approved"
 
-            let categories = await mongoose.model("arts").aggregate([
+            let categories = await mongoose.model("categories").aggregate([
                 {
                     $lookup: {
                         from: 'arts',
-                        localField: 'category',
-                        foreignField: '_id',
-                        as: 'arts'
+                        localField: '_id',
+                        foreignField: 'category',
+                        as: 'category'
                     }
                 },
                 {
-                    $unwind: { path: '$arts', preserveNullAndEmptyArrays: true }
+                    $unwind: { path: '$category', preserveNullAndEmptyArrays: true }
                 },
-
                 {
                     $group: {
                         _id: null,
