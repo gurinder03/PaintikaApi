@@ -107,10 +107,10 @@ exports.dashboard = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
 
-            let categories = await mongoose.model("arts").aggregate([
+            let categories = await mongoose.model("categories").aggregate([
                 {
                     $lookup: {
-                        from: 'categories',
+                        from: 'arts',
                         localField: 'category',
                         foreignField: '_id',
                         as: 'art'
