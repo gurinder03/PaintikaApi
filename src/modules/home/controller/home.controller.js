@@ -34,7 +34,7 @@ exports.list = (payload) => {
             }
            
             if (filter) {
-                obj["$or"].push({ 'artist.name': { $regex: `/${payload.filter}/i`} });
+                obj["$or"].push({ 'artist.name': { $regex: `^/${payload.filter}/i`} });
             }
             console.log("== filter ===",filter);
             console.log("== char char ====",obj);
@@ -66,6 +66,9 @@ exports.list = (payload) => {
 
             let aggregateQuery = [
                 {
+                    $match: obj
+                },
+                {
                     $lookup: {
                         from: "users",
                         localField: "creator_id",
@@ -77,9 +80,6 @@ exports.list = (payload) => {
                 { $sort: sortQuery },
                 { $skip: (paged - 1) * pageSize },
                 { $limit: parseInt(pageSize) },
-                {
-                    $match: obj
-                },
                 {
                     $project: {
                         "_id": 1,
