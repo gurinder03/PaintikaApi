@@ -28,7 +28,7 @@ exports.list = (payload) => {
             let sortQuery = { [sort_by]: parseInt(order_by) };
             obj['$or'] = [];
             if (filter) {
-                obj["$or"].push({ 'user.name': { $regex: `^${payload.filter}`, $options: 'i' } });
+                obj["$or"].push({ 'user.name': { $regex: `/${payload.filter}/i`} });
             }
             console.log("== filter ===",filter);
             console.log("== char char ====",obj);
