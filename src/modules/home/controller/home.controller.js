@@ -28,7 +28,7 @@ exports.list = (payload) => {
             let sortQuery = { [sort_by]: parseInt(order_by) };
             obj['$or'] = [];
             if (filter) {
-                obj["$or"].push({ 'user.name': { $regex: payload.filter || '', $options: '/^a/i' } });
+                obj["$or"].push({ 'user.name': { $regex: `/^a/i${payload.filter} ` } });
             }
             if (categories && categories.length > 0) {
                 obj.category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }
