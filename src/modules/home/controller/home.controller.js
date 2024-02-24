@@ -111,8 +111,8 @@ exports.dashboard = (payload) => {
                 {
                     $lookup: {
                         from: 'arts',
-                        localField: 'category',
-                        foreignField: '_id',
+                        localField: '_id',
+                        foreignField: 'category',
                         as: 'art'
                     }
                 },
