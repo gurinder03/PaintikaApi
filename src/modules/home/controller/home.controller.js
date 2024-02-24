@@ -204,19 +204,34 @@ exports.dashboard = (payload) => {
                     }
                 ])
             }
+
+            if(filter == "prints_of_original_artworks"){
+                prints_of_original_artworks = await mongoose.model("arts").aggregate([
+                    {
+                        $match: {"status":"approved",is_copy_sale: "no"} 
+                    },
+                    {
+                        $group: {
+                            _id: "$medium",
+                            art: { $first: '$$ROOT' },
+                            count: { $sum: 1 }
+                        }
+                    },
+                    {
+                        $limit: 20
+                    }
+                ])
+            }
         
             resolve({
                 categories: categories, 
                 new_arrivals: new_arrivals,
                 filter_by_theme:filter_by_theme,
                 choose_by_color: choose_by_color,
-                explore_by_medium: explore_by_medium
+                explore_by_medium: explore_by_medium,
+                prints_of_original_artworks:prints_of_original_artworks
             });
 
-
-            // Handler.GET(params, (err, resdata) => {
-            //     return err ? reject(err) : resolve(resdata);
-            // })
         } catch (err) {
             reject(err);
         }
