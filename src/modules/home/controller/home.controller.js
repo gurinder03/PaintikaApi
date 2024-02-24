@@ -74,7 +74,7 @@ exports.list = (payload) => {
                         as: "artist"
                     }
                 },
-                { $unwind: { path: "$artist", preserveNullAndEmptyArrays: false } },
+                { $unwind: { path: "$artist", preserveNullAndEmptyArrays: true } },
                 {
                     $match: obj
                 },
