@@ -119,16 +119,16 @@ exports.dashboard = (payload) => {
                 {
                     $unwind: { path: '$art', preserveNullAndEmptyArrays: true }
                 },
-                {
-                    $match: {"art.status":"approved"} 
-                },
-                {
-                    $group: {
-                        _id: null,
-                        art: { $first: '$$ROOT' },
-                        count: { $sum: 1 }
-                    }
-                }
+                // {
+                //     $match: {"art.status":"approved"} 
+                // },
+                // {
+                //     $group: {
+                //         _id: null,
+                //         art: { $first: '$$ROOT' },
+                //         count: { $sum: 1 }
+                //     }
+                // }
             ])
 
             resolve(categories);
