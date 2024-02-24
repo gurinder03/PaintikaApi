@@ -113,22 +113,22 @@ exports.dashboard = (payload) => {
                         from: 'categories',
                         localField: 'category',
                         foreignField: '_id',
-                        as: 'art'
+                        as: 'category'
                     }
                 },
                 {
-                    $unwind: { path: '$art', preserveNullAndEmptyArrays: true }
+                    $unwind: { path: '$category', preserveNullAndEmptyArrays: true }
                 },
                 // {
                 //     $match: {"art.status":"approved"} 
                 // },
-                // {
-                //     $group: {
-                //         _id: null,
-                //         art: { $first: '$$ROOT' },
-                //         count: { $sum: 1 }
-                //     }
-                // }
+                {
+                    $group: {
+                        _id: {"status":"approved"} ,
+                        art: { $first: '$$ROOT' },
+                        count: { $sum: 1 }
+                    }
+                }
             ])
 
             resolve(categories);
