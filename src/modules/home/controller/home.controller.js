@@ -7,7 +7,7 @@ const Handler = require('../handler/home.handler');
 exports.list = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const obj = {};
+            let obj = {};
             let min,max;
             let { 
                 order,
@@ -26,8 +26,13 @@ exports.list = (payload) => {
             let order_by = order || -1;
             let paged = page || 1;
             let sortQuery = { [sort_by]: parseInt(order_by) };
-            obj.status = "approved";
-            obj['$or'] = [];
+           
+            if(filter && filter == "" && price && price.length == 0 && size && size.length == 0 && medium && medium.length == 0 && color && color.length == 0){
+                 obj = {};
+            }else{
+                obj['$or'] = [];
+            }
+           
             if (filter) {
                 obj["$or"].push({ 'user.name': { $regex: `/${payload.filter}/i`} });
             }
@@ -36,7 +41,7 @@ exports.list = (payload) => {
             if (categories && categories.length > 0) {
                 obj.category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }
             }
-
+            obj.status = "approved";
             if(size && size.length > 0){
                 obj["$or"].push({'size':{$in:size}}) 
             }
