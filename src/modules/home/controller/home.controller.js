@@ -122,13 +122,13 @@ exports.dashboard = (payload) => {
                 {
                     $match: {"art.status":"approved"} 
                 },
-                // {
-                //     $group: {
-                //         _id: "category",
-                //         art: { $first: '$$ROOT' },
-                //         count: { $sum: 1 }
-                //     }
-                // }
+                {
+                    $group: {
+                        _id: "_id",
+                        // art: { $first: '$$ROOT' },
+                        count: { $sum: 1 }
+                    }
+                }
             ])
 
             resolve(categories);
