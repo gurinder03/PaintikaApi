@@ -117,7 +117,7 @@ exports.dashboard = (payload) => {
                     }
                 },
                 {
-                    $unwind: { path: '$art', preserveNullAndEmptyArrays: false }
+                    $unwind: { path: '$category', preserveNullAndEmptyArrays: false }
                 },
                 {
                     $match: {"status":"approved"} 
