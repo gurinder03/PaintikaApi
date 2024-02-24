@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose');
+const moment = require('moment');
 const Handler = require('../handler/home.handler');
 
 
@@ -107,6 +108,19 @@ exports.dashboard = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
 
+            let obj = {};
+            // new_arrivals, filter_by_theme, choose_by_color, explore_by_medium, prints_of_original_artworks
+            let new_arrivals, filter_by_theme, choose_by_color, explore_by_medium, prints_of_original_artworks;
+            let { filter} = payload;  
+       
+
+            const currentDate = new Date();
+            const thirtyDaysAgo = moment(currentDate).clone().subtract(30, 'days').format();
+      
+            if(filter == "filter_by_theme"){
+                obj = {status:"approved"}
+            }
+
             let categories = await mongoose.model("categories").aggregate([
                 {
                     $lookup: {
@@ -131,7 +145,21 @@ exports.dashboard = (payload) => {
                 }
             ])
 
-            resolve(categories);
+            if(filter == "new_arrivals"){
+                obj = {status:"approved",createdAt: {$gte: thirtyDaysAgo, $lte: currentDate}}
+                 new_arrivals = await mongoose.model("arts").aggregate([
+                    {
+                        $match:obj
+                    },
+                    {
+                        limit:20
+                    }
+                ])
+            }
+            
+        
+
+            resolve({categories: categories, new_arrivals: new_arrivals});
 
 
             // Handler.GET(params, (err, resdata) => {
