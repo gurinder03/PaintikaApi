@@ -151,9 +151,6 @@ exports.dashboard = (payload) => {
                  new_arrivals = await mongoose.model("arts").aggregate([
                     {
                         $match:obj
-                    },
-                    {
-                        limit:20
                     }
                 ])
                 console.log("== new arrivals ===", new_arrivals);
