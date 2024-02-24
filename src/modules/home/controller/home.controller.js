@@ -66,9 +66,6 @@ exports.list = (payload) => {
 
             let aggregateQuery = [
                 {
-                    $match: obj
-                },
-                {
                     $lookup: {
                         from: "users",
                         localField: "creator_id",
@@ -80,34 +77,37 @@ exports.list = (payload) => {
                 { $sort: sortQuery },
                 { $skip: (paged - 1) * pageSize },
                 { $limit: parseInt(pageSize) },
-                // {
-                //     $project: {
-                //         "_id": 1,
-                //         "creator_id": 1,
-                //         "role": 1,
-                //         "name": 1,
-                //         "image": 1,
-                //         "price": 1,
-                //         "color":1,
-                //         "theme":1,
-                //         "frame_quality": 1,
-                //         "size": 1,
-                //         "medium": 1,
-                //         "theme": 1,
-                //         "rating": 1,
-                //         "category": 1,
-                //         "category_detail": 1,
-                //         "status": 1,
-                //         "createdAt": 1,
-                //         "updatedAt": 1,
-                //         "slug": 1,
-                //         "artist._id": 1,
-                //         "artist.email_or_mobile_number": 1,
-                //         "artist.name": 1,
-                //         "artist.role": 1,
-                //         "artist.profile_image": 1
-                //     }
-                // }
+                {
+                    $match: obj
+                },
+                {
+                    $project: {
+                        "_id": 1,
+                        "creator_id": 1,
+                        "role": 1,
+                        "name": 1,
+                        "image": 1,
+                        "price": 1,
+                        "color":1,
+                        "theme":1,
+                        "frame_quality": 1,
+                        "size": 1,
+                        "medium": 1,
+                        "theme": 1,
+                        "rating": 1,
+                        "category": 1,
+                        "category_detail": 1,
+                        "status": 1,
+                        "createdAt": 1,
+                        "updatedAt": 1,
+                        "slug": 1,
+                        "artist._id": 1,
+                        "artist.email_or_mobile_number": 1,
+                        "artist.name": 1,
+                        "artist.role": 1,
+                        "artist.profile_image": 1
+                    }
+                }
             ]
 
             let params = {
