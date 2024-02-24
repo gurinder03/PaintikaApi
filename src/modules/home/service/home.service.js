@@ -11,10 +11,10 @@ const list = async (req, res) => {
     }
 }
 
-const dashboard = async() =>{
+const dashboard = async(req,res) =>{
     try{
    let result = await Controller.dashboard(req.body);
-   return Response.successResponseWithCount(res,"List successfully",res)
+   return Response.successResponse(res, "Update successfully", result);
     }catch(err){
         return Response.internalError(res,err);
     }
