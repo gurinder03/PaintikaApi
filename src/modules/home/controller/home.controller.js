@@ -11,13 +11,15 @@ exports.list = (payload) => {
             let min,max;
             let { 
                 order,
-                page, limit, 
+                page,
+                limit, 
                 filter,
                 categories,
                 is_copy_sale,
                 price,
                 size,
-                medium,color,
+                medium,
+                color,
                 frame_quality
             } = payload;
 
@@ -34,7 +36,7 @@ exports.list = (payload) => {
             }
            
             if (filter) {
-                obj["$or"].push({ 'artist.name': { $regex: `^/${payload.filter}/i`} });
+                obj["$or"].push({ 'artist.name': `^/${payload.filter}/i` });
             }
             console.log("== filter ===",filter);
             console.log("== char char ====",obj);
@@ -63,7 +65,6 @@ exports.list = (payload) => {
                 obj["$or"].push({'color':{$in:color}}) 
             }
 
-
             let aggregateQuery = [
                 {
                     $match: obj
@@ -80,9 +81,6 @@ exports.list = (payload) => {
                 { $sort: sortQuery },
                 { $skip: (paged - 1) * pageSize },
                 { $limit: parseInt(pageSize) },
-                {
-                  $match:{'artist.name': { $regex: `^/${payload.filter}/i`}}
-                },
                 {
                     $project: {
                         "_id": 1,
