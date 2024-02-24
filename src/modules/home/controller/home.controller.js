@@ -66,9 +66,6 @@ exports.list = (payload) => {
             }
 
             let aggregateQuery = [
-                // {
-                //     $match: obj
-                // },
                 {
                     $lookup: {
                         from: "users",
