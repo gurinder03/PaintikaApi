@@ -6,8 +6,8 @@ module.exports = {
     SECRET: "@$%%56",
     EXPIREIN: "15d",
     MONGO_URL: "localhost:27017",
-    TWILLIO_FROM: "+12517323046",
-    TWILLIO_ACCOUNT_SID: "ACae06f55f7d9bda4fcf619987861cae31",
+    TWILLIO_FROM: "+12517323046",  
+    TWILLIO_ACCOUNT_SID: "ACae06f55f7d9bda4fcf619987861cae31",  
     TWILLIO_AUTHTOKEN: "fe1a872b7f83210cecb99a0d81ab7711",
 
     SEND_GRID_FROM: "developergurinder@gmail.com",
