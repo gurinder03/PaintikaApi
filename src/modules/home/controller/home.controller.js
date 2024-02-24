@@ -66,9 +66,9 @@ exports.list = (payload) => {
             }
 
             let aggregateQuery = [
-                {
-                    $match: obj
-                },
+                // {
+                //     $match: obj
+                // },
                 {
                     $lookup: {
                         from: "users",
@@ -78,6 +78,9 @@ exports.list = (payload) => {
                     }
                 },
                 { $unwind: { path: "$artist", preserveNullAndEmptyArrays: false } },
+                {
+                    $match: obj
+                },
                 { $sort: sortQuery },
                 { $skip: (paged - 1) * pageSize },
                 { $limit: parseInt(pageSize) },
