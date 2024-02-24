@@ -14,16 +14,6 @@ module.exports.GETLIST = async (params, callback) => {
 
 
 
-module.exports.GET = async (params, callback) => {
-    let Collection = params.Collection;
-    return await Collection
-        .aggregate(params.aggregateQuery)
-        .then((result) => {
-            callback(null,result);
-        }).catch((err) => {
-            callback(err, null)
-        })
-}
 
 
 
