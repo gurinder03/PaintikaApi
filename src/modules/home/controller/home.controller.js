@@ -27,7 +27,7 @@ exports.list = (payload) => {
             let paged = page || 1;
             let sortQuery = { [sort_by]: parseInt(order_by) };
            
-            if(filter && filter == "" && price && price.length == 0 && size && size.length == 0 && medium && medium.length == 0 && color && color.length == 0){
+            if(filter == "" && price.length == 0 && size.length == 0 && medium.length == 0 &&  color.length == 0 && frame_quality.length == 0){
                  obj = {};
             }else{
                 obj['$or'] = [];
