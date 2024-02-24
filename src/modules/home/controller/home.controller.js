@@ -30,6 +30,8 @@ exports.list = (payload) => {
             if (filter) {
                 obj["$or"].push({ 'user.name': { $regex: `^${payload.filter}`, $options: 'i' } });
             }
+            console.log("== filter ===",filter);
+            console.log("== char char ====",obj);
             if (categories && categories.length > 0) {
                 obj.category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }
             }
