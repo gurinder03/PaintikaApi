@@ -124,7 +124,7 @@ exports.dashboard = (payload) => {
                 },
                 {
                     $group: {
-                        _id: "_id",
+                        _id: "$_id",
                         // art: { $first: '$$ROOT' },
                         count: { $sum: 1 }
                     }
