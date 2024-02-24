@@ -65,9 +65,7 @@ exports.list = (payload) => {
 
 
             let aggregateQuery = [
-                {
-                    $match: obj
-                },
+           
                 {
                     $lookup: {
                         from: "users",
@@ -80,6 +78,9 @@ exports.list = (payload) => {
                 { $sort: sortQuery },
                 { $skip: (paged - 1) * pageSize },
                 { $limit: parseInt(pageSize) },
+                {
+                    $match: obj
+                },
                 {
                     $project: {
                         "_id": 1,
