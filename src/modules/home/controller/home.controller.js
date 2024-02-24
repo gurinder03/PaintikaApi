@@ -163,6 +163,8 @@ exports.dashboard = (payload) => {
                             art: { $first: '$$ROOT' },
                             count: { $sum: 1 }
                         }
+                    },{
+                        $limit: 1
                     }
                 ])
             }
