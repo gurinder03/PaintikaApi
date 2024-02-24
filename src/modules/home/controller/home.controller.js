@@ -34,7 +34,7 @@ exports.list = (payload) => {
             }
            
             if (filter) {
-                obj["$or"].push({ 'user.name': { $regex: `/${payload.filter}/i`} });
+                obj["$or"].push({ 'artist.name': { $regex: `/${payload.filter}/i`} });
             }
             console.log("== filter ===",filter);
             console.log("== char char ====",obj);
