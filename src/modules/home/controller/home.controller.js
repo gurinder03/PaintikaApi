@@ -7,14 +7,14 @@ exports.list = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
             const obj = {};
-            let { order, page, limit, filter, price_type, categories, city, state} = payload;
+            let { order, page, limit, filter, price_type, categories, city, state } = payload;
 
             let size = limit || 10;
             let sort_by = "created_at";
             let order_by = order || -1;
             let paged = page || 1;
             let sortQuery = { [sort_by]: parseInt(order_by) };
-            if (city) { 
+            if (city) {
                 obj['$or'] = [];
                 obj["$or"].push({ 'city': { $eq: city } });
                 obj["$or"].push({ 'city_code': { $eq: city } });
@@ -102,6 +102,46 @@ exports.list = (payload) => {
     })
 }
 
+
+exports.dashboard = (payload) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const obj = {};
+            obj.status = "approved"
+
+            let categories = await mongoose.model("categories").aggregate([
+                {
+                    $lookup: {
+                        from: 'arts',
+                        localField: '_id',
+                        foreignField: 'category',
+                        as: 'category'
+                    }
+                },
+                {
+                    $unwind: { path: '$category', preserveNullAndEmptyArrays: true }
+                },
+
+                {
+                    $group: {
+                        _id: null,
+                        firstDocument: { $first: '$$ROOT' },
+                        count: { $sum: 1 }
+                    }
+                }
+            ])
+
+            resolve(categories);
+
+
+            // Handler.GET(params, (err, resdata) => {
+            //     return err ? reject(err) : resolve(resdata);
+            // })
+        } catch (err) {
+            reject(err);
+        }
+    })
+}
 
 exports.relatedList = (payload) => {
     return new Promise(async (resolve, reject) => {

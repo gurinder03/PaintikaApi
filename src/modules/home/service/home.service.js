@@ -11,6 +11,15 @@ const list = async (req, res) => {
     }
 }
 
+const dashboard = async() =>{
+    try{
+   let result = await Controller.dashboard(req.body);
+   return Response.successResponseWithCount(res,"List successfully",res)
+    }catch(err){
+        return Response.internalError(res,err);
+    }
+}
+
 
 const relatedList = async (req, res) => {
     try {
@@ -23,6 +32,7 @@ const relatedList = async (req, res) => {
 
 
 exports.list = list;
+exports.dashboard = dashboard;
 exports.relatedList = relatedList;
 
 

@@ -15,6 +15,9 @@ module.exports.add = (req,res,next)=>{
     if(!req.body.size){
         return Response.validatorResponse(res,"Size is required");
     }
+    if(!req.body.theme){
+        return Response.validatorResponse(res,"Theme is required");
+    }
     if(!req.body.medium){
         return Response.validatorResponse(res,"Medium is required");
     }
@@ -27,7 +30,9 @@ module.exports.add = (req,res,next)=>{
     if(!req.body.color){
         return Response.validatorResponse(res,"color is required");
     }
-
+    if(!req.body.desc){
+        return Response.validatorResponse(res,"Description is required");
+    }
     req.body.status = "pending";
     if(!req.body.price){
         return Response.validatorResponse(res,"Price is required");

@@ -111,45 +111,17 @@ exports.updateUser = async (payload) => {
 exports.list = async (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log("== payload ====",payload);
+            let { page, limit, status,category,creator_id,filter} = payload;
             let obj = {};
-            let min,max;
-            let { page, limit, 
-                status,category,creator_id,
-                price,size,medium,color,
-                frame_quality,
-                is_paintika_art,is_copy_sale} = payload;
+
+            if(filter){
+                obj['$or'] = [];
+                obj["$or"].push({'name': { $regex: payload.filter || '', $options: 'i' }})
+            }
+
             let pagesize = limit || 10;
             let paged = page || 1;
-            if(price && price.length == 0 && size && size.length == 0 && medium && medium.length == 0 && color && color.length == 0){
 
-            }else{
-                obj['$or'] = [];
-            }
-           
-            if(size && size.length > 0){
-                obj["$or"].push({'size':{$in:size}}) 
-            }
-            if(price && price.length > 0){
-                 min = Math.min(...price);
-                 max = Math.max(...price);
-                 obj["$or"].push({'price':{ $gte: min , $lte: max }})
-            }
-            if(frame_quality && frame_quality.length > 0){
-                obj["$or"].push({'frame_quality':{$in:frame_quality}})   
-            }
-            if(is_paintika_art){
-                obj["$or"].push({'is_paintika_art':is_paintika_art})   
-            }
-            if(is_copy_sale){
-                obj["$or"].push({'is_copy_sale':is_copy_sale})   
-            }
-            if(medium && medium.length > 0){
-                obj["$or"].push({'medium':{$in:medium}})   
-            }
-            if(color && color.length > 0){
-                obj["$or"].push({'color':{$in:color}}) 
-            }
             if(creator_id){
                 obj.creator_id = creator_id;
             }
@@ -159,7 +131,6 @@ exports.list = async (payload) => {
             if(category){
                 obj.category = new mongoose.Types.ObjectId(category);
             }
-            console.log("== query ====",obj);
             let aggregateQuery = [
                 {
                     $match:obj
