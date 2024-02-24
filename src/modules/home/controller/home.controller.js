@@ -107,7 +107,6 @@ exports.dashboard = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
             const obj = {};
-            obj.status = "approved"
 
             let categories = await mongoose.model("categories").aggregate([
                 {
@@ -122,7 +121,7 @@ exports.dashboard = (payload) => {
                     $unwind: { path: '$category', preserveNullAndEmptyArrays: true }
                 },
                 {
-                  $match:obj
+                  $match:{"category.status":"approved"}
                 },
                 {
                     $group: {
