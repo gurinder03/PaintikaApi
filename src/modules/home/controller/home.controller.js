@@ -117,9 +117,6 @@ exports.dashboard = (payload) => {
             const currentDate = new Date();
             const thirtyDaysAgo = new Date(moment(currentDate).clone().subtract(30, 'days').format());
       
-            if(filter == "filter_by_theme"){
-                obj = {status:"approved"}
-            }
 
             let categories = await mongoose.model("categories").aggregate([
                 {
@@ -155,9 +152,23 @@ exports.dashboard = (payload) => {
                 ])
             }
             
+            if(filter == "filter_by_theme"){
+                filter_by_theme = await mongoose.model("arts").aggregate([
+                    {
+                        $match: {"status":"approved"} 
+                    },
+                    {
+                        $group: {
+                            _id: "$theme",
+                            art: { $first: '$$ROOT' },
+                            count: { $sum: 1 }
+                        }
+                    }
+                ])
+            }
         
 
-            resolve({categories: categories, new_arrivals: new_arrivals});
+            resolve({categories: categories, new_arrivals: new_arrivals,filter_by_theme:filter_by_theme});
 
 
             // Handler.GET(params, (err, resdata) => {
