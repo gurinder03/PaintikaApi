@@ -115,7 +115,7 @@ exports.dashboard = (payload) => {
        
 
             const currentDate = new Date();
-            const thirtyDaysAgo = moment(currentDate).clone().subtract(30, 'days').format();
+            const thirtyDaysAgo = new Date(moment(currentDate).clone().subtract(30, 'days').format());
       
             if(filter == "filter_by_theme"){
                 obj = {status:"approved"}
@@ -146,7 +146,7 @@ exports.dashboard = (payload) => {
             ])
 
             if(filter == "new_arrivals"){
-                obj = {status:"approved",createdAt: {$gte: thirtyDaysAgo, $lte: currentDate}}
+                obj = {status:"approved",createdAt: {$gte:  thirtyDaysAgo, $lte: currentDate}}
                 console.log("== obj obj ===",obj);
                  new_arrivals = await mongoose.model("arts").aggregate([
                     {
