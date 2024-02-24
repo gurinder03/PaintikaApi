@@ -120,6 +120,9 @@ exports.dashboard = (payload) => {
                     $unwind: { path: '$art', preserveNullAndEmptyArrays: false }
                 },
    
+                {
+                    $match: {"art.status":"approved"} 
+                }
                 // {
                 //     $group: {
                 //         _id: {status: "approved"},
