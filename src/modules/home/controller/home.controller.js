@@ -65,7 +65,9 @@ exports.list = (payload) => {
 
 
             let aggregateQuery = [
-           
+                {
+                    $match: obj
+                },
                 {
                     $lookup: {
                         from: "users",
@@ -79,7 +81,7 @@ exports.list = (payload) => {
                 { $skip: (paged - 1) * pageSize },
                 { $limit: parseInt(pageSize) },
                 {
-                    $match: obj
+                  $match:{'artist.name': { $regex: `^/${payload.filter}/i`}}
                 },
                 {
                     $project: {
