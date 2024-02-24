@@ -164,7 +164,7 @@ exports.dashboard = (payload) => {
                             count: { $sum: 1 }
                         }
                     },{
-                        $limit: 0
+                        $limit: 20
                     }
                 ])
             }
@@ -180,6 +180,27 @@ exports.dashboard = (payload) => {
                             art: { $first: '$$ROOT' },
                             count: { $sum: 1 }
                         }
+                    },
+                    {
+                        $limit: 20
+                    }
+                ])
+            }
+
+            if(filter == "explore_by_medium"){
+                explore_by_medium = await mongoose.model("arts").aggregate([
+                    {
+                        $match: {"status":"approved"} 
+                    },
+                    {
+                        $group: {
+                            _id: "$medium",
+                            art: { $first: '$$ROOT' },
+                            count: { $sum: 1 }
+                        }
+                    },
+                    {
+                        $limit: 20
                     }
                 ])
             }
@@ -188,7 +209,8 @@ exports.dashboard = (payload) => {
                 categories: categories, 
                 new_arrivals: new_arrivals,
                 filter_by_theme:filter_by_theme,
-                choose_by_color: choose_by_color
+                choose_by_color: choose_by_color,
+                explore_by_medium: explore_by_medium
             });
 
 
