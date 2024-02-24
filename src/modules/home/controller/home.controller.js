@@ -166,9 +166,28 @@ exports.dashboard = (payload) => {
                     }
                 ])
             }
-        
 
-            resolve({categories: categories, new_arrivals: new_arrivals,filter_by_theme:filter_by_theme});
+            if(filter == "choose_by_color"){
+                choose_by_color = await mongoose.model("arts").aggregate([
+                    {
+                        $match: {"status":"approved"} 
+                    },
+                    {
+                        $group: {
+                            _id: "$color",
+                            art: { $first: '$$ROOT' },
+                            count: { $sum: 1 }
+                        }
+                    }
+                ])
+            }
+        
+            resolve({
+                categories: categories, 
+                new_arrivals: new_arrivals,
+                filter_by_theme:filter_by_theme,
+                choose_by_color: choose_by_color
+            });
 
 
             // Handler.GET(params, (err, resdata) => {
