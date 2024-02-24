@@ -113,7 +113,7 @@ exports.dashboard = (payload) => {
                         from: 'categories',
                         localField: 'category',
                         foreignField: '_id',
-                        as: 'art'
+                        as: 'category'
                     }
                 },
                 {
@@ -124,8 +124,8 @@ exports.dashboard = (payload) => {
                 },
                 {
                     $group: {
-                        _id: null,
-                        category: { $first: '$$ROOT' },
+                        _id: "category",
+                        art: { $first: '$$ROOT' },
                         count: { $sum: 1 }
                     }
                 }
