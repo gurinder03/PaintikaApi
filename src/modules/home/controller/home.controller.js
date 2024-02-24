@@ -117,11 +117,11 @@ exports.dashboard = (payload) => {
                     }
                 },
                 {
-                    $unwind: { path: '$art', preserveNullAndEmptyArrays: false }
+                    $unwind: { path: '$art', preserveNullAndEmptyArrays: true }
                 },
-                {
-                    $match: {"status":"approved"} 
-                },
+                // {
+                //     $match: {"art.status":"approved"} 
+                // },
                 // {
                 //     $group: {
                 //         _id: "category",
