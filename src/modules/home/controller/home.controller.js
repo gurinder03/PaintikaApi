@@ -122,6 +122,9 @@ exports.dashboard = (payload) => {
                     $unwind: { path: '$category', preserveNullAndEmptyArrays: true }
                 },
                 {
+                  $match:obj
+                },
+                {
                     $group: {
                         _id: null,
                         category: { $first: '$$ROOT' },
