@@ -11,7 +11,7 @@ const ArtService = require('../../art/service/art.service');
 
 /******************************************* USER ROUTES*****************************************************/
 
-Router.post('/dashboard',Validator.list,Service.dashboard);
+Router.get('/dashboard',Service.dashboard);
 Router.post('/list',Validator.list,Service.list);
 Router.post('/category/list',Validator.list,CategoryService.list);
 Router.post('/related/list',Validator.list,Service.relatedList);
