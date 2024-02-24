@@ -147,13 +147,12 @@ exports.dashboard = (payload) => {
 
             if(filter == "new_arrivals"){
                 obj = {status:"approved",createdAt: {$gte:  thirtyDaysAgo, $lte: currentDate}}
-                console.log("== obj obj ===",obj);
                  new_arrivals = await mongoose.model("arts").aggregate([
                     {
                         $match:obj
-                    }
+                    },
+                    { $limit: 20 }
                 ])
-                console.log("== new arrivals ===", new_arrivals);
             }
             
         
