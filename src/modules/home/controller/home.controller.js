@@ -164,7 +164,7 @@ exports.dashboard = (payload) => {
                             count: { $sum: 1 }
                         }
                     },{
-                        $limit: 1
+                        $limit: 0
                     }
                 ])
             }
