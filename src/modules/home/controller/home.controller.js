@@ -38,8 +38,6 @@ exports.list = (payload) => {
             if (filter) {
                 obj["$or"].push({ 'artist.name': {'$regex': '^'+payload.filter+'', $options: 'i' } });
             }
-            console.log("== filter ===",filter);
-            console.log("== char char ====",obj);
             if (categories && categories.length > 0) {
                 obj.category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }
             }
@@ -47,9 +45,9 @@ exports.list = (payload) => {
             if(size && size.length > 0){
                 obj["$or"].push({'size':{$in:size}}) 
             }
-            if(price && price.length > 0){
-                 min = Math.min(...price);
-                 max = Math.max(...price);
+            if(price){
+                 min = price.min;
+                 max = price.max;
                  obj["$or"].push({'price':{ $gte: min , $lte: max }})
             }
             if(frame_quality && frame_quality.length > 0){
