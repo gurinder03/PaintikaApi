@@ -46,9 +46,11 @@ exports.list = (payload) => {
                 obj["$or"].push({'size':{$in:size}}) 
             }
             if(price){
-                 min = price.min;
-                 max = price.max;
-                 obj["$or"].push({'price':{ $gte: min , $lte: max }})
+                 if(price.hasOwnProperty("min") && price.hasOwnProperty("max")){
+                    min = price.min;
+                    max = price.max;
+                    obj["$or"].push({'price':{ $gte: min , $lte: max }})
+                 }
             }
             if(frame_quality && frame_quality.length > 0){
                 obj["$or"].push({'frame_quality':{$in:frame_quality}})   
