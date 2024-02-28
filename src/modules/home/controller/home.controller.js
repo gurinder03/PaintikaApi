@@ -16,6 +16,7 @@ exports.list = (payload) => {
                 filter,
                 categories,
                 is_copy_sale,
+                artists_dictionary,
                 price,
                 size,
                 medium,
@@ -29,14 +30,16 @@ exports.list = (payload) => {
             let paged = page || 1;
             let sortQuery = { [sort_by]: parseInt(order_by) };
            
-            if(filter == "" && price.length == 0 && size.length == 0 && medium.length == 0 &&  color.length == 0 && frame_quality.length == 0){
+            if(artists_dictionary == "" && filter == "" && price.length == 0 && size.length == 0 && medium.length == 0 &&  color.length == 0 && frame_quality.length == 0){
                  obj = {};
             }else{
                 obj['$or'] = [];
             }
-           
+            if (artists_dictionary) {
+                obj["$or"].push({ 'artist.name': {'$regex': '^'+payload.artists_dictionary+'', $options: 'i' } });
+            }
             if (filter) {
-                obj["$or"].push({ 'artist.name': {'$regex': '^'+payload.filter+'', $options: 'i' } });
+                obj["$or"].push({ 'artist.name': {'$regex': payload.filter, $options: 'i' } });
             }
             if (categories && categories.length > 0) {
                 obj.category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }

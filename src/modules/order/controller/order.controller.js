@@ -319,9 +319,7 @@ exports.checkout = async (payload) => {
             let artistList = [];
             await Promise.all(
                 itemsList.map(async (id) => {
-                    console.log("== id id id ===", id);
                     let item = await mongoose.model("carts").findOne({ _id: id });
-                    console.log("== item item ===", item);
                     order_sub_total = order_sub_total + (item.price * item.quantity);
                     artistList.push(item.creator_id)
                     carts.push(item);
