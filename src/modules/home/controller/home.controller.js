@@ -38,9 +38,9 @@ exports.list = (payload) => {
             if (artists_dictionary) {
                 obj["$or"].push({ 'artist.name': {'$regex': '^'+artists_dictionary+'', $options: 'i' } });
             }
-            if (filter) {
-                obj["$or"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
-            }
+            // if (filter) {
+            //     obj["$or"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
+            // }
             if (categories && categories.length > 0) {
                 obj.category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }
             }
