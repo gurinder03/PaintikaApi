@@ -33,39 +33,39 @@ exports.list = (payload) => {
             if(artists_dictionary == "" && filter == "" && price.length == 0 && size.length == 0 && medium.length == 0 &&  color.length == 0 && frame_quality.length == 0){
                  obj = {};
             }else{
-                obj['$or'] = [];
+                obj['$and'] = [];
             }
             if (artists_dictionary) {
-                obj["$or"].push({ 'artist.name': {'$regex': '^'+artists_dictionary+'', $options: 'i' } });
+                obj["$and"].push({ 'artist.name': {'$regex': '^'+artists_dictionary+'', $options: 'i' } });
             }
             if (filter) {
-                obj["$or"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
+                obj["$and"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
             }
             if (categories && categories.length > 0) {
                 obj.category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }
             }
             obj.status = "approved";
             if(size && size.length > 0){
-                obj["$or"].push({'size':{$in:size}}) 
+                obj["$and"].push({'size':{$in:size}}) 
             }
             if(price){
                  if(price.hasOwnProperty("min") && price.hasOwnProperty("max")){
                     min = price.min;
                     max = price.max;
-                    obj["$or"].push({'price':{ $gte: min , $lte: max }})
+                    obj["$and"].push({'price':{ $gte: min , $lte: max }})
                  }
             }
             if(frame_quality && frame_quality.length > 0){
-                obj["$or"].push({'frame_quality':{$in:frame_quality}})   
+                obj["$and"].push({'frame_quality':{$in:frame_quality}})   
             }
             if(is_copy_sale){
-                obj["$or"].push({'is_copy_sale':is_copy_sale})   
+                obj["$and"].push({'is_copy_sale':is_copy_sale})   
             }
             if(medium && medium.length > 0){
-                obj["$or"].push({'medium':{$in:medium}})   
+                obj["$and"].push({'medium':{$in:medium}})   
             }
             if(color && color.length > 0){
-                obj["$or"].push({'color':{$in:color}}) 
+                obj["$and"].push({'color':{$in:color}}) 
             }
 
             let aggregateQuery = [
