@@ -31,12 +31,8 @@ exports.list = (payload) => {
             let order_by = order || -1;
             let paged = page || 1;
             let sortQuery = { [sort_by]: parseInt(order_by) };
-           
-            if(artists_dictionary == "" && filter == "" && price.length == 0 && size.length == 0 && medium.length == 0 &&  color.length == 0 && frame_quality.length == 0){
-                 obj = {};
-            }else{
-                obj['$and'] = [];
-            }
+            obj['$and'] = [];
+
             if (artists_dictionary) {
                 obj["$and"].push({ 'artist.name': {'$regex': '^'+artists_dictionary+'', $options: 'i' } });
             }
