@@ -31,12 +31,12 @@ exports.list = (payload) => {
             let order_by = order || -1;
             let paged = page || 1;
             let sortQuery = { [sort_by]: parseInt(order_by) };
-           
-            if(artists_dictionary == "" && filter == "" && categories.length == 0 && size.length == 0 && medium.length == 0 &&  color.length == 0 && frame_quality.length == 0){
-                 obj = {};
-            }else{
-                obj['$and'] = [];
-            }
+            obj['$and'] = [];
+            // if(artists_dictionary == "" && filter == "" && categories.length == 0  && size.length == 0 && medium.length == 0 &&  color.length == 0 && frame_quality.length == 0){
+            //      obj = {};
+            // }else{
+            //     obj['$and'] = [];
+            // }
             if (artists_dictionary) {
                 obj["$and"].push({ 'artist.name': {'$regex': '^'+artists_dictionary+'', $options: 'i' } });
             }
@@ -44,8 +44,9 @@ exports.list = (payload) => {
                 obj["$and"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
             }
             if (categories && categories.length > 0) {
-                obj["$and"].category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }
+                obj["$and"].push({category : { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }});
             }
+
             obj.status = "approved";
             if(size && size.length > 0){
                 obj["$and"].push({'size':{$in:size}}) 
