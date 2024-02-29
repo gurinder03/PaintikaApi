@@ -9,6 +9,8 @@ exports.list = (payload) => {
         try {
             let obj = {};
             let min,max;
+
+            console.log("=========>>>>>>>",payload)
             let { 
                 order,
                 page,

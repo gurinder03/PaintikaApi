@@ -92,7 +92,6 @@ const resendOTP = async (req, res) => {
 const login = async (req, res) => {
    try {
       let query = {};
-      console.log("=== re body ===",req.body)
       if (validator.isEmail(req.body.email_or_mobile_number)) {
          req.body.email_or_mobile_number = req.body.email_or_mobile_number.trim().toLowerCase();
          query = { role: req.body.role, email_or_mobile_number: req.body.email_or_mobile_number }
