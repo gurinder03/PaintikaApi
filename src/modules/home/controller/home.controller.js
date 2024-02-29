@@ -44,7 +44,7 @@ exports.list = (payload) => {
                 obj["$and"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
             }
             if (categories && categories.length > 0) {
-                obj.category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }
+                obj["$and"].category = { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }
             }
             obj.status = "approved";
             if(size && size.length > 0){
