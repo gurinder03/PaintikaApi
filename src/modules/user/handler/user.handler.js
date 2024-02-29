@@ -72,7 +72,7 @@ module.exports.PUT = async (params, callback) => {
     let Collection = params.Collection;
     let payload = params.payload;
     let query = params.query;
-
+       console.log("== check parma =", params)
     return await Collection
         .findOneAndUpdate(query,payload, { new: true })
         .then((result) => {
