@@ -39,7 +39,7 @@ exports.list = (payload) => {
             if (categories && categories.length > 0) {
                 obj["$and"].push({category : { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }});
             }
-
+           
             obj.status = "approved";
             if(size && size.length > 0){
                 obj["$and"].push({'size':{$in:size}}) 
@@ -64,6 +64,10 @@ exports.list = (payload) => {
                 obj["$and"].push({'color':{$in:color}}) 
             }
           console.log("======>>> pobject======",obj);
+          if(obj["$and"].length == 0){
+            delete obj["$and"]
+          }
+          console.log("======>>> after after======",obj);
             let aggregateQuery = [
                 {
                     $lookup: {
