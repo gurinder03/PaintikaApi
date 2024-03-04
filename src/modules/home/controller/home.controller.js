@@ -30,11 +30,12 @@ exports.list = (payload) => {
             let paged = page || 1;
             let sortQuery = { [sort_by]: parseInt(order_by) };
             obj['$and'] = [];
+            obj['$or'] = [];
             if (artists_dictionary && artists_dictionary !== "") {
                 obj["$and"].push({ 'artist.name': {'$regex': '^'+artists_dictionary+'', $options: 'i' } });
             }
             if (filter && filter !== "") {
-                obj["$and"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
+                obj["$or"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
             }
             if (categories && categories.length > 0) {
                 obj["$and"].push({category : { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }});
@@ -66,6 +67,7 @@ exports.list = (payload) => {
           console.log("======>>> pobject======",obj);
           if(obj["$and"].length == 0){
             delete obj["$and"]
+            delete obj["$or"]
           }
           console.log("======>>> after after======",obj);
             let aggregateQuery = [
