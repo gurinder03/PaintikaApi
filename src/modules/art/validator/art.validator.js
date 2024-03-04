@@ -3,9 +3,9 @@
 const Response = require('../../../utils/response'); 
 
 module.exports.add = (req,res,next)=>{
-    if(!req.body.name){
-        return Response.validatorResponse(res,"Name is required");
-    }
+    // if(!req.body.name){
+    //     return Response.validatorResponse(res,"Name is required");
+    // }
     if(!req.body.role){
         return Response.validatorResponse(res,"Role is required");
     }

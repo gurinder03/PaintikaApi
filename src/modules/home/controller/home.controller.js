@@ -35,7 +35,7 @@ exports.list = (payload) => {
                 obj["$and"].push({ 'artist.name': {'$regex': '^'+artists_dictionary+'', $options: 'i' } });
             }
             if (filter && filter !== "") {
-                obj["$or"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
+                obj["$or"].push({ 'theme': {'$regex': filter, $options: 'i' } });
             }
             if (categories && categories.length > 0) {
                 obj["$and"].push({category : { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }});
@@ -64,14 +64,14 @@ exports.list = (payload) => {
             if(color && color.length > 0){
                 obj["$and"].push({'color':{$in:color}}) 
             }
-          console.log("======>>> pobject======",obj);
+
           if(obj["$and"].length == 0){
             delete obj["$and"]
           }
           if(obj["$or"].length == 0){
             delete obj["$or"]
           }
-          console.log("======>>> after after======",obj);
+
             let aggregateQuery = [
                 {
                     $lookup: {
@@ -101,7 +101,6 @@ exports.list = (payload) => {
                         "frame_quality": 1,
                         "size": 1,
                         "medium": 1,
-                        "theme": 1,
                         "rating": 1,
                         "category": 1,
                         "category_detail": 1,
@@ -175,6 +174,20 @@ exports.dashboard = (payload) => {
                  new_arrivals = await mongoose.model("arts").aggregate([
                     {
                         $match:obj
+                    },
+                    {
+                    $lookup: {
+                        from: 'users',
+                        localField: '_id',
+                        foreignField: 'creator_id',
+                        as: 'artist'
+                    }
+                },
+                {
+                    $match: {"art.status":"approved"} 
+                },
+                    {
+
                     },
                     { $limit: 20 }
                 ])
