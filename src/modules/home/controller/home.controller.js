@@ -63,7 +63,7 @@ exports.list = (payload) => {
             if(color && color.length > 0){
                 obj["$and"].push({'color':{$in:color}}) 
             }
-
+          console.log("======>>> pobject======",obj);
             let aggregateQuery = [
                 {
                     $lookup: {
