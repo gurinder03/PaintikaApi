@@ -188,7 +188,7 @@ exports.dashboard = (payload) => {
                     {
                         $lookup: {
                           from: "users",
-                          let: { "$_id": "$creator_id" },
+                          let: { "_id": "$creator_id" },
                           pipeline: [
                             {
                               $match: {
