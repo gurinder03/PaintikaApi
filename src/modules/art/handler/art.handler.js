@@ -86,7 +86,6 @@ module.exports.PATCH = async (params, callback) => {
 }
 
 module.exports.PUT = async (params, callback) => {
-    console.log("== paqraarara==",params)
     let Collection = params.Collection;
     let payload = params.payload;
     let query = params.query;

@@ -99,7 +99,6 @@ const login = async (req, res) => {
          query = { role: req.body.role, email_or_mobile_number: req.body.email_or_mobile_number }
       }
       const userExist = await mongoose.model("users").findOne(query).then((resp) => resp).catch((err) => err);
-      console.log("==exist exist ===",userExist)
       if (!userExist) {
          return Response.validatorResponse(res, 'User does not exist.');
       }
@@ -307,7 +306,6 @@ const changePassword = async(req,res) =>{
 const resetPassword = async(req,res) =>{
    try{
       let payload = req.body;
-      console.log("== payload payload ===",payload);
       if (validator.isEmail(payload.email_or_mobile_number)) {
          payload.email_or_mobile_number.trim().toLowerCase();
       }

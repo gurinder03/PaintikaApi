@@ -6,7 +6,7 @@ const Controller = require('../controller/category.controller');
 
 const add = async (req, res) => {
     try {
-        console.log("=== req body body body ===", req.body);
+
         req.body.name_slug = req.body.name.trim().toLowerCase()
         const file = req.file;
         let categoryExist = await mongoose.model("categories").findOne({ name_slug: req.body.name_slug });
@@ -52,7 +52,6 @@ const update = async (req, res) => {
         let result = await Controller.update(req.body);
         return Response.successResponse(res, "Update successfully", result);
     } catch (err) {
-        console.log("== error errro ==", err);
         return Response.internalError(res, err);
     }
 }

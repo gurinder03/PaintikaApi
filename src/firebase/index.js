@@ -3,7 +3,6 @@ const admin = require('firebase-admin');
 
 module.exports = (userAgent) => {
     let FB;
-    console.log("==============", userAgent);
     const serviceAccount = userAgent == 'web' ? require('./web') : require('./mobile')
     FB = admin.initializeApp({
         credential: admin.credential.cert({

@@ -53,8 +53,6 @@ exports.update = async (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
             payload.category_deatil = await mongoose.model("categories").findOne({_id: payload.category});
-
-            console.log("=== payload ===",payload);
             let params = {
                 Collection: mongoose.model("arts"),
                 payload: payload,
@@ -64,7 +62,6 @@ exports.update = async (payload) => {
                 if(err){
                     reject(err)
                 }else{
-                    console.log("=====",resdata);
                     let user_data = await mongoose.model("users").findOne({_id: resdata.creator_id});
                     user_data.status = payload.status;
                     if(user_data){

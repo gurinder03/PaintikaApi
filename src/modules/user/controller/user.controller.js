@@ -281,7 +281,6 @@ exports.resetPassword =  (payload) => {
                 payload: payload,
                 query: { email_or_mobile_number: payload.email_or_mobile_number }
             }
-            console.log("== paramsresetPassword ===",params)
             Handler.PUT(params, (err, resdata) => {
                 return err ? reject(err) : resolve(resdata);
             })
@@ -353,8 +352,6 @@ exports.adminLogin = async(payload) =>{
     return new Promise(async (resolve, reject) => {
         try {
             let setting_data = await mongoose.model('settings').findOne({});
-            console.log("==setting data =====",setting_data);
-            console.log("/////=====",payload)
             if(setting_data.passcode == payload.passcode){
                 resolve({
                     isAdmin: true

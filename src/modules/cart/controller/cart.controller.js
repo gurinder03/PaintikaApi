@@ -37,7 +37,6 @@ exports.list = (payload) => {
                 if (err) {
                     reject(err);
                 } else {
-                    console.log("== resdata resdata",resdata);
                     let setting = await mongoose.model("settings").findOne({});
                     if(resdata.length > 0){
                       await Promise.all(
