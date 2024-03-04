@@ -196,9 +196,10 @@ exports.dashboard = (payload) => {
                                   $eq: ["$creator_id", "$$userId"]
                                 }
                               }
-                            }
+                            },
+                            { $project : { _id:1, name:1 } }
                           ],
-                          select: "name",
+                        
                           as: "artist"
                         }
                       },
