@@ -30,10 +30,10 @@ exports.list = (payload) => {
             let paged = page || 1;
             let sortQuery = { [sort_by]: parseInt(order_by) };
             obj['$and'] = [];
-            if (artists_dictionary) {
+            if (artists_dictionary && artists_dictionary !== "") {
                 obj["$and"].push({ 'artist.name': {'$regex': '^'+artists_dictionary+'', $options: 'i' } });
             }
-            if (filter) {
+            if (filter && filter !== "") {
                 obj["$and"].push({ 'artist.name': {'$regex': filter, $options: 'i' } });
             }
             if (categories && categories.length > 0) {
@@ -44,7 +44,7 @@ exports.list = (payload) => {
             if(size && size.length > 0){
                 obj["$and"].push({'size':{$in:size}}) 
             }
-            if(price){
+            if(price && typeof(price) === Object){
                  if(price.hasOwnProperty("min") && price.hasOwnProperty("max")){
                     min = price.min;
                     max = price.max;
@@ -54,7 +54,7 @@ exports.list = (payload) => {
             if(frame_quality && frame_quality.length > 0){
                 obj["$and"].push({'frame_quality':{$in:frame_quality}})   
             }
-            if(is_copy_sale){
+            if(is_copy_sale && is_copy_sale !== ""){
                 obj["$and"].push({'is_copy_sale':is_copy_sale})   
             }
             if(medium && medium.length > 0){
