@@ -31,21 +31,24 @@ exports.list = (payload) => {
             }
            let sub_total = 0;
            let all_total = 0;
+           let tax = 0;
  
             Handler.GETLIST(params, async(err, resdata) => {
                 if (err) {
                     reject(err);
                 } else {
                     console.log("== resdata resdata",resdata);
+                    let setting = await mongoose.model("settings").findOne({});
                     if(resdata.length > 0){
                       await Promise.all(
                         resdata.map((cart) =>{
                             sub_total = sub_total + Number(cart.price) * Number(cart.quantity);
                         })
                       )
-                      all_total = sub_total;
+                      tax = Number((sub_total * Number(setting.tax)/100).toFixed(2))
+                      all_total = sub_total + tax;
                     }
-                    resolve({carts:resdata,order_sub_total: sub_total,order_total:all_total});
+                    resolve({carts:resdata,tax:tax,order_sub_total: sub_total,order_total:all_total});
                 }
             })
         } catch (err) {
