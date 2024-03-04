@@ -175,20 +175,6 @@ exports.dashboard = (payload) => {
                     {
                         $match:obj
                     },
-                    {
-                    $lookup: {
-                        from: 'users',
-                        localField: '_id',
-                        foreignField: 'creator_id',
-                        as: 'artist'
-                    }
-                },
-                {
-                    $match: {"art.status":"approved"} 
-                },
-                    {
-
-                    },
                     { $limit: 20 }
                 ])
             }
