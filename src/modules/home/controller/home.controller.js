@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const Handler = require('../handler/home.handler');
+const { select } = require('underscore');
 
 
 exports.list = (payload) => {
@@ -184,6 +185,23 @@ exports.dashboard = (payload) => {
                     {
                         $match: {"status":"approved"} 
                     },
+                    {
+                        $lookup: {
+                          from: "users",
+                          let: { userId: "$_id" },
+                          pipeline: [
+                            {
+                              $match: {
+                                $expr: {
+                                  $eq: ["$creator_id", "$$userId"]
+                                }
+                              }
+                            },
+                            {select: "name"}
+                          ],
+                          as: "artist"
+                        }
+                      },
                     {
                         $group: {
                             _id: "$theme",
