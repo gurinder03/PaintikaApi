@@ -67,6 +67,8 @@ exports.list = (payload) => {
           console.log("======>>> pobject======",obj);
           if(obj["$and"].length == 0){
             delete obj["$and"]
+          }
+          if(obj["$or"].length == 0){
             delete obj["$or"]
           }
           console.log("======>>> after after======",obj);
