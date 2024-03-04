@@ -274,14 +274,15 @@ exports.resetPassword =  (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
             payload.password = bcrypt.hashSync(payload.password, salt);
+
             await utils.jwtToken(payload);
             let params = {
                 Collection: mongoose.model("users"),
                 payload: payload,
                 query: { email_or_mobile_number: payload.email_or_mobile_number }
             }
+            console.log("== paramsresetPassword ===",params)
             Handler.PUT(params, (err, resdata) => {
-                console.log("== err err err ==",err);
                 return err ? reject(err) : resolve(resdata);
             })
 
