@@ -9,11 +9,11 @@ exports.list = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
             let obj = {};
-            let min,max;
-            let { 
+            let min, max;
+            let {
                 order,
                 page,
-                limit, 
+                limit,
                 filter,
                 categories,
                 is_copy_sale,
@@ -33,45 +33,45 @@ exports.list = (payload) => {
             obj['$and'] = [];
             obj['$or'] = [];
             if (artists_dictionary && artists_dictionary !== "") {
-                obj["$and"].push({ 'artist.name': {'$regex': '^'+artists_dictionary+'', $options: 'i' } });
+                obj["$and"].push({ 'artist.name': { '$regex': '^' + artists_dictionary + '', $options: 'i' } });
             }
             if (filter && filter !== "") {
-                obj["$or"].push({ 'theme': {'$regex': filter, $options: 'i' } });
+                obj["$or"].push({ 'theme': { '$regex': filter, $options: 'i' } });
             }
             if (categories && categories.length > 0) {
-                obj["$and"].push({category : { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) }});
-            }
-           
-            obj.status = "approved";
-            if(size && size.length > 0){
-                obj["$and"].push({'size':{$in:size}}) 
-            }
-            if(price && typeof(price) === Object){
-                 if(price.hasOwnProperty("min") && price.hasOwnProperty("max")){
-                    min = price.min;
-                    max = price.max;
-                    obj["$and"].push({'price':{ $gte: min , $lte: max }})
-                 }
-            }
-            if(frame_quality && frame_quality.length > 0){
-                obj["$and"].push({'frame_quality':{$in:frame_quality}})   
-            }
-            if(is_copy_sale && is_copy_sale !== ""){
-                obj["$and"].push({'is_copy_sale':is_copy_sale})   
-            }
-            if(medium && medium.length > 0){
-                obj["$and"].push({'medium':{$in:medium}})   
-            }
-            if(color && color.length > 0){
-                obj["$and"].push({'color':{$in:color}}) 
+                obj["$and"].push({ category: { $in: categories.map((id) => new mongoose.Types.ObjectId(id)) } });
             }
 
-          if(obj["$and"].length == 0){
-            delete obj["$and"]
-          }
-          if(obj["$or"].length == 0){
-            delete obj["$or"]
-          }
+            obj.status = "approved";
+            if (size && size.length > 0) {
+                obj["$and"].push({ 'size': { $in: size } })
+            }
+            if (price && typeof (price) === Object) {
+                if (price.hasOwnProperty("min") && price.hasOwnProperty("max")) {
+                    min = price.min;
+                    max = price.max;
+                    obj["$and"].push({ 'price': { $gte: min, $lte: max } })
+                }
+            }
+            if (frame_quality && frame_quality.length > 0) {
+                obj["$and"].push({ 'frame_quality': { $in: frame_quality } })
+            }
+            if (is_copy_sale && is_copy_sale !== "") {
+                obj["$and"].push({ 'is_copy_sale': is_copy_sale })
+            }
+            if (medium && medium.length > 0) {
+                obj["$and"].push({ 'medium': { $in: medium } })
+            }
+            if (color && color.length > 0) {
+                obj["$and"].push({ 'color': { $in: color } })
+            }
+
+            if (obj["$and"].length == 0) {
+                delete obj["$and"]
+            }
+            if (obj["$or"].length == 0) {
+                delete obj["$or"]
+            }
 
             let aggregateQuery = [
                 {
@@ -97,8 +97,8 @@ exports.list = (payload) => {
                         "name": 1,
                         "image": 1,
                         "price": 1,
-                        "color":1,
-                        "theme":1,
+                        "color": 1,
+                        "theme": 1,
                         "frame_quality": 1,
                         "size": 1,
                         "medium": 1,
@@ -141,11 +141,11 @@ exports.dashboard = (payload) => {
             // new_arrivals, filter_by_theme, choose_by_color, explore_by_medium, prints_of_original_artworks
             let new_arrivals = [], filter_by_theme = [], choose_by_color = [], explore_by_medium = [], prints_of_original_artworks = [];
             let categories = [];
-            let { filter} = payload;  
-       
+            let { filter } = payload;
+
             const currentDate = new Date();
             const thirtyDaysAgo = new Date(moment(currentDate).clone().subtract(30, 'days').format());
-      
+
             categories = await mongoose.model("categories").aggregate([
                 {
                     $lookup: {
@@ -159,7 +159,7 @@ exports.dashboard = (payload) => {
                     $unwind: { path: '$art', preserveNullAndEmptyArrays: true }
                 },
                 {
-                    $match: {"art.status":"approved"} 
+                    $match: { "art.status": "approved" }
                 },
                 {
                     $group: {
@@ -170,55 +170,73 @@ exports.dashboard = (payload) => {
                 }
             ])
 
-            if(filter == "new_arrivals"){
-                obj = {status:"approved",createdAt: {$gte:  thirtyDaysAgo, $lte: currentDate}}
-                 new_arrivals = await mongoose.model("arts").aggregate([
+            if (filter == "new_arrivals") {
+                obj = { status: "approved", createdAt: { $gte: thirtyDaysAgo, $lte: currentDate } }
+                new_arrivals = await mongoose.model("arts").aggregate([
                     {
-                        $match:obj
+                        $match: obj
                     },
                     { $limit: 20 }
                 ])
             }
-            
-            if(filter == "filter_by_theme"){
+
+            if (filter == "filter_by_theme") {
                 filter_by_theme = await mongoose.model("arts").aggregate([
                     {
-                        $match: {"status":"approved"} 
+                        $match: { "status": "approved" }
                     },
                     {
                         $lookup: {
-                          from: "users",
-                          let: { "userId": "$creator_id" },
-                          pipeline: [
-                            {
-                              $match: {
-                                $expr: {
-                                  $eq: ["$_id", "$$userId"]
-                                }
-                              }
-                            },
-                            { $project : { _id:1, name:1 } }
-                          ],
-                        
-                          as: "artist"
+                            from: "users",
+                            let: { "userId": "$creator_id" },
+                            pipeline: [
+                                {
+                                    $match: {
+                                        $expr: {
+                                            $eq: ["$_id", "$$userId"]
+                                        }
+                                    }
+                                },
+                                { $project: { _id: 1, name: 1 } }
+                            ],
+
+                            as: "artist"
                         }
-                      },
+                    },
                     {
                         $group: {
                             _id: "$theme",
                             art: { $first: '$$ROOT' },
                             count: { $sum: 1 }
                         }
-                    },{
+                    }, {
                         $limit: 20
                     }
                 ])
             }
 
-            if(filter == "choose_by_color"){
+            if (filter == "choose_by_color") {
                 choose_by_color = await mongoose.model("arts").aggregate([
                     {
-                        $match: {"status":"approved"} 
+                        $match: { "status": "approved" }
+                    },
+                    {
+                        $lookup: {
+                            from: "users",
+                            let: { "userId": "$creator_id" },
+                            pipeline: [
+                                {
+                                    $match: {
+                                        $expr: {
+                                            $eq: ["$_id", "$$userId"]
+                                        }
+                                    }
+                                },
+                                { $project: { _id: 1, name: 1 } }
+                            ],
+
+                            as: "artist"
+                        }
                     },
                     {
                         $group: {
@@ -233,10 +251,28 @@ exports.dashboard = (payload) => {
                 ])
             }
 
-            if(filter == "explore_by_medium"){
+            if (filter == "explore_by_medium") {
                 explore_by_medium = await mongoose.model("arts").aggregate([
                     {
-                        $match: {"status":"approved"} 
+                        $match: { "status": "approved" }
+                    },
+                    {
+                        $lookup: {
+                            from: "users",
+                            let: { "userId": "$creator_id" },
+                            pipeline: [
+                                {
+                                    $match: {
+                                        $expr: {
+                                            $eq: ["$_id", "$$userId"]
+                                        }
+                                    }
+                                },
+                                { $project: { _id: 1, name: 1 } }
+                            ],
+
+                            as: "artist"
+                        }
                     },
                     {
                         $group: {
@@ -251,10 +287,28 @@ exports.dashboard = (payload) => {
                 ])
             }
 
-            if(filter == "prints_of_original_artworks"){
+            if (filter == "prints_of_original_artworks") {
                 prints_of_original_artworks = await mongoose.model("arts").aggregate([
                     {
-                        $match: {"status":"approved",is_copy_sale: "no"} 
+                        $match: { "status": "approved", is_copy_sale: "no" }
+                    },
+                    {
+                        $lookup: {
+                            from: "users",
+                            let: { "userId": "$creator_id" },
+                            pipeline: [
+                                {
+                                    $match: {
+                                        $expr: {
+                                            $eq: ["$_id", "$$userId"]
+                                        }
+                                    }
+                                },
+                                { $project: { _id: 1, name: 1 } }
+                            ],
+
+                            as: "artist"
+                        }
                     },
                     {
                         $group: {
@@ -268,14 +322,14 @@ exports.dashboard = (payload) => {
                     }
                 ])
             }
-        
+
             resolve({
-                categories: categories, 
+                categories: categories,
                 new_arrivals: new_arrivals,
-                filter_by_theme:filter_by_theme,
+                filter_by_theme: filter_by_theme,
                 choose_by_color: choose_by_color,
                 explore_by_medium: explore_by_medium,
-                prints_of_original_artworks:prints_of_original_artworks
+                prints_of_original_artworks: prints_of_original_artworks
             });
 
         } catch (err) {
