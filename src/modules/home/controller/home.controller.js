@@ -187,24 +187,6 @@ exports.dashboard = (payload) => {
                         $match: { "status": "approved" }
                     },
                     {
-                        $lookup: {
-                            from: "users",
-                            let: { "userId": "$creator_id" },
-                            pipeline: [
-                                {
-                                    $match: {
-                                        $expr: {
-                                            $eq: ["$_id", "$$userId"]
-                                        }
-                                    }
-                                },
-                                { $project: { _id: 1, name: 1 } }
-                            ],
-
-                            as: "artist"
-                        }
-                    },
-                    {
                         $group: {
                             _id: "$theme",
                             art: { $first: '$$ROOT' },
@@ -220,24 +202,6 @@ exports.dashboard = (payload) => {
                 choose_by_color = await mongoose.model("arts").aggregate([
                     {
                         $match: { "status": "approved" }
-                    },
-                    {
-                        $lookup: {
-                            from: "users",
-                            let: { "userId": "$creator_id" },
-                            pipeline: [
-                                {
-                                    $match: {
-                                        $expr: {
-                                            $eq: ["$_id", "$$userId"]
-                                        }
-                                    }
-                                },
-                                { $project: { _id: 1, name: 1 } }
-                            ],
-
-                            as: "artist"
-                        }
                     },
                     {
                         $group: {
@@ -258,24 +222,6 @@ exports.dashboard = (payload) => {
                         $match: { "status": "approved" }
                     },
                     {
-                        $lookup: {
-                            from: "users",
-                            let: { "userId": "$creator_id" },
-                            pipeline: [
-                                {
-                                    $match: {
-                                        $expr: {
-                                            $eq: ["$_id", "$$userId"]
-                                        }
-                                    }
-                                },
-                                { $project: { _id: 1, name: 1 } }
-                            ],
-
-                            as: "artist"
-                        }
-                    },
-                    {
                         $group: {
                             _id: "$medium",
                             art: { $first: '$$ROOT' },
@@ -292,31 +238,6 @@ exports.dashboard = (payload) => {
                 prints_of_original_artworks = await mongoose.model("arts").aggregate([
                     {
                         $match: { "status": "approved", is_copy_sale: "no" }
-                    },
-                    {
-                        $lookup: {
-                            from: "users",
-                            let: { "userId": "$creator_id" },
-                            pipeline: [
-                                {
-                                    $match: {
-                                        $expr: {
-                                            $eq: ["$_id", "$$userId"]
-                                        }
-                                    }
-                                },
-                                { $project: { _id: 1, name: 1 } }
-                            ],
-
-                            as: "artist"
-                        }
-                    },
-                    {
-                        $group: {
-                            _id: "$medium",
-                            art: { $first: '$$ROOT' },
-                            count: { $sum: 1 }
-                        }
                     },
                     {
                         $limit: 20
