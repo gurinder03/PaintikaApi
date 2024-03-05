@@ -27,6 +27,8 @@ exports.list = (payload) => {
                 frame_quality
             } = payload;
 
+            console.log("=====>>> price",price);
+
             let pageSize = limit || 10;
             let sort_by = "createdAt";
             let order_by = order || -1;
