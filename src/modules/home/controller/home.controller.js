@@ -91,6 +91,7 @@ exports.list = (payload) => {
           if(obj["$or"].length == 0){
             delete obj["$or"]
           }
+          console.log("== obj pbj======", obj);
             let aggregateQuery = [
                 {
                     $lookup: {
