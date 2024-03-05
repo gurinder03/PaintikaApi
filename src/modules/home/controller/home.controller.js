@@ -67,17 +67,9 @@ exports.list = (payload) => {
             if (color && color.length > 0) {
                 obj["$and"].push({ 'color': { $in: color } })
             }
-
-            if (obj["$and"].length == 0) {
-                delete obj["$and"]
-            }
-            if (obj["$or"].length == 0) {
-                delete obj["$or"]
-            }
             if(theme && theme.length > 0){
                 obj["$and"].push({'theme':{$in:theme}}) 
             }
-
             const currentDate = new Date();
             const thirtyDaysAgo = new Date(moment(currentDate).clone().subtract(30, 'days').format());
             
