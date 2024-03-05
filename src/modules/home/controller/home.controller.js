@@ -50,7 +50,8 @@ exports.list = (payload) => {
                 if (price.hasOwnProperty("min") && price.hasOwnProperty("max")) {
                     min = price.min;
                     max = price.max;
-                    obj["$and"].push({ 'price': { $gte: min, $lte: max } })
+                    obj["$and"].push({ 'price': { $gte: min} })
+                    obj["$and"].push({ 'price': { $lte: max } })
                 }
             }
             if (frame_quality && frame_quality.length > 0) {
