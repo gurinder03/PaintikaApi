@@ -15,12 +15,14 @@ exports.list = (payload) => {
                 page,
                 limit,
                 filter,
+                theme,
                 categories,
                 is_copy_sale,
                 artists_dictionary,
                 price,
                 size,
                 medium,
+                new_arrivals,
                 color,
                 frame_quality
             } = payload;
@@ -50,8 +52,7 @@ exports.list = (payload) => {
                 if (price.hasOwnProperty("min") && price.hasOwnProperty("max")) {
                     min = price.min;
                     max = price.max;
-                    obj["$and"].push({ 'price': { $gte: min} })
-                    obj["$and"].push({ 'price': { $lte: max } })
+                    obj["$and"].push({ 'price': { $gte: min, $lte: max} })
                 }
             }
             if (frame_quality && frame_quality.length > 0) {
@@ -73,7 +74,23 @@ exports.list = (payload) => {
             if (obj["$or"].length == 0) {
                 delete obj["$or"]
             }
+            if(theme && theme.length > 0){
+                obj["$and"].push({'theme':{$in:theme}}) 
+            }
 
+            const currentDate = new Date();
+            const thirtyDaysAgo = new Date(moment(currentDate).clone().subtract(30, 'days').format());
+            
+            if(new_arrivals && new_arrivals == "yes"){
+                obj["$and"].push({createdAt: {$gte:  thirtyDaysAgo, $lte: currentDate}})
+            }
+
+          if(obj["$and"].length == 0){
+            delete obj["$and"]
+          }
+          if(obj["$or"].length == 0){
+            delete obj["$or"]
+          }
             let aggregateQuery = [
                 {
                     $lookup: {
