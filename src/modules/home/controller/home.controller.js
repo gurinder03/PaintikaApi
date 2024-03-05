@@ -51,7 +51,7 @@ exports.list = (payload) => {
             if (size && size.length > 0) {
                 obj["$and"].push({ 'size': { $in: size } })
             }
-            if (price && typeof (price) === Object) {
+            if (price && typeof (price) == 'object') {
                 if (price.hasOwnProperty("min") && price.hasOwnProperty("max")) {
                     min = price.min;
                     max = price.max;
