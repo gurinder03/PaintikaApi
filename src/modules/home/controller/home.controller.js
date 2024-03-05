@@ -28,6 +28,7 @@ exports.list = (payload) => {
             } = payload;
 
             console.log("=====>>> price",price);
+            console.log("===========>>>>",typeof(price))
 
             let pageSize = limit || 10;
             let sort_by = "createdAt";
