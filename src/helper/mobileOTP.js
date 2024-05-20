@@ -10,14 +10,14 @@ module.exports.sendOtpSMS = async(data,msg) =>{
     try{
         console.log("accountSid", accountSid);
         console.log("authToken", authToken);
-      return await client.messages.create({
+        client.messages.create({
             body: msg,
             from: from,
             to: "+91 " + data.email_or_mobile_number
             
         }).then((message) =>{
             console.log(message.sid);
-        }).done()
+        })
     }catch(err){
         console.log("Twilio error ",err);
         return err;
