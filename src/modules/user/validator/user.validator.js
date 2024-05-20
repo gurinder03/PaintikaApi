@@ -8,6 +8,7 @@ module.exports.signup = (req,res,next)=>{
     if(!req.body.role){
         return Response.validatorResponse(res,"Role is required");
     }
+    console.log(req.body)
     if(!req.body.email_or_mobile_number){
         return Response.validatorResponse(res,"Email or mobile number is required");
     }
