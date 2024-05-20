@@ -1,15 +1,15 @@
 'use strict'
 
 require('dotenv').config();
-const express = require('express');
-const path = require('path');
-const logger = require('morgan');
-const cors = require('cors');
-const cluster = require('cluster');
-const dbConnetion = require('./db/connection');
-const numCPUs = require('os').cpus().length;
-const port = process.env.PORT || 5004;
-const app = express();
+const express = require('express')
+    , path = require('path')
+    , logger = require('morgan')
+    , cors = require('cors')
+    , cluster = require('cluster')
+    , dbConnetion = require('./db/connection')
+    , numCPUs = require('os').cpus().length
+    , port = process.env.PORT || 5004
+    , app = express();
 app.use(cors());
 
 app.use(logger('dev'));
