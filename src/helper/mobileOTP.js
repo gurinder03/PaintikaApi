@@ -11,7 +11,7 @@ module.exports.sendOtpSMS = async(data,msg) =>{
         console.log("accountSid", accountSid);
         console.log("authToken", authToken);
         client.messages.create({
-            body: "eofjjfewfjepfjepjpoj",
+            body: msg,
             from: from,
             to: "+91 " + data.email_or_mobile_number
             

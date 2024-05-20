@@ -8,7 +8,9 @@ module.exports = {
     MONGO_URL: "localhost:27017",
     TWILLIO_FROM: "+12517323046",  
     TWILLIO_ACCOUNT_SID: "ACae06f55f7d9bda4fcf619987861cae31",  
-    TWILLIO_AUTHTOKEN: "7cc9634bade8aa3db4d91a87145ea99d",
+    TWILLIO_AUTHTOKEN: " b4949f8a566c144950391ba051dec641",
+
+
 
 
     SEND_GRID_FROM: "developergurinder@gmail.com",
