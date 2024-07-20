@@ -1,7 +1,6 @@
 
-const config = require('../config/config');
-const api_key = config.SEND_GRID_API_KEY;
-const from = config.SEND_GRID_FROM;
+const api_key = process.env.SEND_GRID_API_KEY;
+const from = process.env.SEND_GRID_FROM;
 
 module.exports.sendEmail = async (to, sub, msg) => {
   const sgMail = require('@sendgrid/mail');

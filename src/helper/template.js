@@ -2,9 +2,8 @@
 const fs = require('fs');
 const ejs = require('ejs');
 const twilio = require('twilio');
-const config = require('../config/config');
-const api_key = config.SEND_GRID_API_KEY;
-const from = config.SEND_GRID_FROM;
+const api_key = process.env.SEND_GRID_API_KEY;
+const from = process.env.SEND_GRID_FROM;
 
 
 module.exports.emailTemplate = async (order, to) => {
@@ -53,9 +52,9 @@ module.exports.emailTemplate = async (order, to) => {
 
 module.exports.mobileTemplate = async (order, phone) => {
     let msg = `Your order placed : OTP is ${order.order_number}`;
-    let from = config.TWILLIO_FROM;
-    let accountSid = config.TWILLIO_ACCOUNT_SID;
-    let authToken = config.TWILLIO_AUTHTOKEN;
+    let from = process.env.TWILLIO_FROM;
+    let accountSid = process.env.TWILLIO_ACCOUNT_SID;
+    let authToken = process.env.TWILLIO_AUTHTOKEN;
     let client = new twilio(accountSid, authToken);
     try {
         return await client.messages.create({

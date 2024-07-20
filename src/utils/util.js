@@ -1,7 +1,6 @@
 
 const mailSender = require('../helper/sendEmail');
 const SendOTP = require('../helper/mobileOTP');
-const config = require('../config/config')
 const jwt = require('jsonwebtoken');
 const RandomNumber = require("../helper/generateRamdon");
 
@@ -50,6 +49,6 @@ module.exports.emailOTP = async(payload,type) =>{
 module.exports.jwtToken = async(payload) =>{
     return jwt.sign({
         email_or_mobile_number: payload.email_or_mobile_number,
-    }, config.SECRET, { expiresIn: config.EXPIREIN });
+    }, process.env.SECRET, { expiresIn: process.env.EXPIREIN });
     
 }

@@ -1,11 +1,10 @@
 'use strict';
 
-const config = require('../config/config');
 
 module.exports.sendOtpSMS = async(data,msg) =>{
-    let from = config.TWILLIO_FROM;
-    let accountSid = config.TWILLIO_ACCOUNT_SID;
-    let authToken = config.TWILLIO_AUTHTOKEN;
+    let from = process.env.TWILLIO_FROM;
+    let accountSid = process.env.TWILLIO_ACCOUNT_SID;
+    let authToken = process.env.TWILLIO_AUTHTOKEN;
     let client =  require('twilio')(accountSid, authToken);
     try{
         console.log("accountSid", accountSid);

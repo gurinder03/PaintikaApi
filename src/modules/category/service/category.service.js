@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const config = require("../../../config/config");
 const db = require('../../../db/connection');
 const Response = require('../../../utils/response');
 const Controller = require('../controller/category.controller');
