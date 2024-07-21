@@ -18,6 +18,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+console.log("== process end ====",process.env)
 
 app.use(express.static(path.join(__dirname, 'public/')));
 app.use(express.static(path.join(__dirname, 'public')));
