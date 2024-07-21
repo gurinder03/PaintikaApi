@@ -19,7 +19,6 @@ app.use(express.urlencoded({
 }))
 
 console.log("  require('dotenv').",require('dotenv').config())
-global.env = process.env;
 
 app.use(express.static(path.join(__dirname, 'public/')));
 app.use(express.static(path.join(__dirname, 'public')));
