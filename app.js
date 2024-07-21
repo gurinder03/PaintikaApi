@@ -18,7 +18,6 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-console.log("  require('dotenv').",require('dotenv'))
 
 app.use(express.static(path.join(__dirname, 'public/')));
 app.use(express.static(path.join(__dirname, 'public')));
