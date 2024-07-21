@@ -42,7 +42,7 @@ if (cluster.isMaster) {
         if (err) {
             console.log('Something went wrong');
         } else {
-            app.connect(dbConnetion);
+            // app.connect(dbConnetion);
             require('./schema/index');
             require('./router/route')(app);
             console.log(`Server is running at ${port}`)
