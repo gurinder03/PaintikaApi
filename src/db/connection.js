@@ -1,8 +1,8 @@
 
 'use strict';
-
+require('dotenv').config();
 const mongoose  = require('mongoose');
-console.log("== dbPath====",process.env.MONGO_URL);
+console.log("== dbPath====",process.env);
 const dbPath = `mongodb://${process.env.MONGO_URL}/${process.env.DB_NAME}`;
 
 // const dbPath = `mongodb://0.0.0.0:27017/paintika`;
