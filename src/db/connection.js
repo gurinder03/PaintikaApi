@@ -2,8 +2,9 @@
 'use strict';
 
 const mongoose  = require('mongoose');
-const dbPath = `mongodb://${env.MONGO_URL}/${env.DB_NAME}`;
 console.log("== dbPath====",global.env.MONGO_URL);
+const dbPath = `mongodb://${env.MONGO_URL}/${env.DB_NAME}`;
+
 // const dbPath = `mongodb://0.0.0.0:27017/paintika`;
 mongoose.connect(dbPath, {
   useNewUrlParser: true
