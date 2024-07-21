@@ -159,17 +159,17 @@ exports.dashboard = (payload) => {
             const thirtyDaysAgo = new Date(moment(currentDate).clone().subtract(30, 'days').format());
 
             categories = await mongoose.model("categories").aggregate([
-                {
-                    $lookup: {
-                        from: 'arts',
-                        localField: '_id',
-                        foreignField: 'category',
-                        as: 'art'
-                    }
-                },
-                {
-                    $unwind: { path: '$art', preserveNullAndEmptyArrays: true }
-                },
+                // {
+                //     $lookup: {
+                //         from: 'arts',
+                //         localField: '_id',
+                //         foreignField: 'category',
+                //         as: 'art'
+                //     }
+                // },
+                // {
+                //     $unwind: { path: '$art', preserveNullAndEmptyArrays: true }
+                // },
                 // {
                 //     $match: { "art.status": "approved" }
                 // },
