@@ -6,7 +6,7 @@ const express = require('express')
     , logger = require('morgan')
     , cors = require('cors')
     , cluster = require('cluster')
-    , dbConnetion = require('./db/connection')
+    , dbConnetion = require('./src/db/connection')
     , numCPUs = require('os').cpus().length
     , port = process.env.PORT || 5004
     , app = express();
@@ -18,6 +18,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+console.log("  require('dotenv').",require('dotenv'))
 
 app.use(express.static(path.join(__dirname, 'public/')));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,8 +42,8 @@ if (cluster.isMaster) {
             console.log('Something went wrong');
         } else {
             app.connect(dbConnetion);
-            require('./schema/index');
-            require('./router/route')(app);
+            require('./src/schema/index');
+            require('./src/router/route')(app);
             console.log(`Server is running at ${port}`)
         }
     })
