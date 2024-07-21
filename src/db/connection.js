@@ -2,7 +2,7 @@
 'use strict';
 
 const mongoose  = require('mongoose');
-console.log("== dbPath====",global.env.MONGO_URL);
+console.log("== dbPath====",env.MONGO_URL);
 const dbPath = `mongodb://${env.MONGO_URL}/${env.DB_NAME}`;
 
 // const dbPath = `mongodb://0.0.0.0:27017/paintika`;
