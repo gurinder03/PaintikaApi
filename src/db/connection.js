@@ -1,7 +1,7 @@
 
-// 'use strict';
+ 'use strict';
 
-// const mongoose  = require('mongoose');
+const mongoose  = require('mongoose');
 // console.log("== dbPath====",env.MONGO_URL);
 // const dbPath = `mongodb://${env.MONGO_URL}/${env.DB_NAME}`;
 
@@ -24,5 +24,5 @@
 //   });
 // });
 
-// module.exports =  mongoose;
+ module.exports =  mongoose;
 
