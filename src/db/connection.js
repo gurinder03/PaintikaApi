@@ -2,7 +2,7 @@
 'use strict';
 
 const mongoose  = require('mongoose');
-const dbPath = `mongodb://https://localhost:5004/paintika`;
+const dbPath = `mongodb://localhost:27017/paintika`;
 
 // const dbPath = `mongodb://0.0.0.0:27017/paintika`;
 mongoose.connect(dbPath, {
