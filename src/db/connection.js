@@ -3,7 +3,7 @@
 
 const mongoose  = require('mongoose');
 const dbPath = `mongodb://localhost:27017/paintika`;
-
+console.log("=== url ===",process.env)
 // const dbPath = `mongodb://0.0.0.0:27017/paintika`;
 mongoose.connect(dbPath, {
   useNewUrlParser: true
